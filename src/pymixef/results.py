@@ -140,9 +140,9 @@ class FitResult:
     ) -> np.ndarray | DiagnosticTable:
         """Simulate from archived Gaussian calculations or a backend simulator.
 
-        The arguments intentionally mirror the blueprint.  A backend may archive a
-        callable simulator for an in-memory result, but archival reloads use the
-        standardized Gaussian fallback only when its assumptions are explicit.
+        The arguments follow PyMixEF's public simulation contract. A backend may
+        archive a callable simulator for an in-memory result, but archival reloads
+        use the standardized Gaussian fallback only when its assumptions are explicit.
         """
 
         if n_replicates < 1:

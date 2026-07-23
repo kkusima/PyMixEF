@@ -1,9 +1,8 @@
 # PyMixEF native-core ABI skeleton
 
-This C++20 library establishes the stable C ABI boundary specified by the
-blueprint. The 0.1 Python engines remain independent NumPy/SciPy reference
-implementations; they do not silently change calculations based on whether this
-library is present.
+This C++20 library establishes PyMixEF's stable C ABI boundary. The Python
+engines remain independent NumPy/SciPy reference implementations; they do not
+silently change calculations based on whether this library is present.
 
 The skeleton currently supplies version negotiation, a compensated weighted
 sum-of-squares kernel, and a small dense Cholesky reference. Future sparse
@@ -17,4 +16,3 @@ cmake -S native -B build/native -DCMAKE_BUILD_TYPE=Release
 cmake --build build/native
 ctest --test-dir build/native --output-on-failure
 ```
-

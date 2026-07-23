@@ -19,9 +19,8 @@ universally validated product.
 PyMixEF 0.1 is an **experimental reference implementation**. An
 `implemented=true` capability means that the deliberately narrow behavior named
 by that capability exists and has the recorded evidence. It does not mean that
-a blueprint stage gate has passed, that external-software parity has been
-established, or that the package is suitable for every clinical, regulated, or
-decision-bearing use.
+external-software parity has been established or that the package is suitable
+for every clinical, regulated, or decision-bearing use.
 ```
 
 ## Public API at a glance
@@ -175,7 +174,7 @@ complete requirement row.
 | --- | --- |
 | `requirement` | Stable capability identifier |
 | `capability` | Human-readable capability name |
-| `stage` | Blueprint or workflow stage |
+| `stage` | Capability or workflow stage |
 | `maturity` | Current maturity label, such as `experimental` |
 | `implemented` | Whether the narrowly defined behavior is implemented |
 | `reproducibility` | Reproducibility class string, or `None` for a gated row |
@@ -721,7 +720,7 @@ The 14 currently gated capability rows are:
 | `ADV-003` | Joint longitudinal-event simulation | No joint model, shared random-effect simulator, or validated event-time likelihood |
 | `PERF-003` | Explicit numerical thread controls | Thread environment is recorded, but numerical-library thread counts are not configured or enforced |
 
-The blueprint-level evidence still needed includes:
+Additional evidence priorities include:
 
 - broader analytic reference calculations;
 - derivative verification implemented independently of estimator code;
@@ -731,7 +730,6 @@ The blueprint-level evidence still needed includes:
 - cross-platform numerical and performance regression reports; and
 - documented review and approval evidence for each intended context of use.
 
-The Foundation and Classical Core stage gates have not been declared complete.
 Other unavailable methods are rejected rather than silently replaced by a
 different estimator.
 

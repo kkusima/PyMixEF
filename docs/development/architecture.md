@@ -75,7 +75,7 @@ repeat fitting, row alignment, and input immutability against every built-in
 backend. Its case-coverage assertion fails when a built-in backend is
 registered without a case. `ARCH-003` remains open: the public Backend Protocol
 still needs separate objective, gradient, optional Hessian-vector product, and
-simulation contracts before the blueprint's full conformance claim is met.
+simulation contracts for full backend conformance.
 
 ## Capability policy
 

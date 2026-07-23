@@ -10,7 +10,7 @@ ruff check .
 
 Contributions should include:
 
-- a linked blueprint requirement or an RFC for new semantics;
+- a linked requirement, design issue, or RFC for new semantics;
 - mathematical parameterization and likelihood-constant documentation;
 - unit, property, derivative, integration, and pathology tests as applicable;
 - a maturity/limitation update in the capability registry;
@@ -18,4 +18,3 @@ Contributions should include:
 
 Never copy code from proprietary software. Preserve compatible upstream licenses
 and attribution.
-

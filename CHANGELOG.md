@@ -18,6 +18,3 @@
   plus bio/pharma/medical workflows.
 - Added PyPI-ready source and wheel packaging with release-tag checks and
   credential-free Trusted Publishing automation.
-
-All scientific capabilities remain experimental pending the blueprint's public
-reference-validation gates.

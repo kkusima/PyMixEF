@@ -5,31 +5,6 @@ pharmacometrics. Its architecture follows one central rule: define the scientifi
 model once in a typed, versioned intermediate representation, then let compatible
 estimation engines consume that representation.
 
-The 0.1 series is a **foundation implementation with selected reference paths
-toward the Classical Core**. It has not passed the blueprint's Foundation or
-Classical Core stage gates. The current experimental scope includes:
-
-- a safe R-like formula compiler and explicit builder API;
-- immutable model IR, schema validation, deterministic model diffing, and JSON
-  round trips;
-- audited columnar data ingestion and stable source-row reconciliation;
-- Gaussian LMM ML/REML, reference Laplace GLMM, and MMRM calculation paths;
-- a component family/link and covariance system;
-- canonical pharmacometric events, dosing-aware ODE integration, closed-form PK
-  helpers, and typed pharmacometric declarations;
-- structured convergence, simulations, residual tables, VPC data, manifests,
-  cross-platform comparison, reporting, and validation bundles;
-- conservative NONMEM, R-formula, PharmML, and SBML interchange subsets that
-  report unsupported constructs instead of silently approximating them.
-
-The source blueprint describes a multi-year target spanning lme4, glmmTMB, MMRM,
-and NONMEM-class workflows. PyMixEF does **not** claim that its first release has
-reference-validated parity with those targets. It also does not yet provide a
-production FOCEI/SAEM estimator, compiled sparse core, AGHQ engine,
-release-gated R interface, or full backend conformance suite. `pymixef
-capabilities` reports the
-evidence, open-gate, and limitation state of each path.
-
 ## Install
 
 PyMixEF requires Python 3.11 or newer.

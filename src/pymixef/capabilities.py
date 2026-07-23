@@ -136,8 +136,8 @@ CAPABILITIES: tuple[Capability, ...] = (
         _D,
         ("tests/test_lmm.py", "benchmarks/b01_sleepstudy.json"),
         (
-            "The 0.1 reference engine uses dense marginal covariance and is not "
-            "the blueprint's million-row sparse production core.",
+            "The reference engine uses dense marginal covariance; large-scale sparse "
+            "execution requires the planned compiled backend.",
         ),
     ),
     Capability(
@@ -323,8 +323,8 @@ CAPABILITIES: tuple[Capability, ...] = (
         _D,
         ("benchmarks/run.py",),
         (
-            "The current harness contains one reduced synthetic LMM workload and is "
-            "not the blueprint's cross-platform performance corpus.",
+            "The current harness contains one reduced synthetic LMM workload; broader "
+            "cross-platform performance coverage is planned.",
         ),
     ),
     Capability(
@@ -381,8 +381,8 @@ CAPABILITIES += (
         (
             "A reusable fit-payload suite covers every built-in backend and checks "
             "validation, deterministic repeat fitting, input immutability, and row "
-            "alignment. The blueprint's objective, gradient, optional Hessian-vector "
-            "product, and simulation contracts are not yet part of the Backend Protocol.",
+            "alignment. Objective, gradient, optional Hessian-vector product, and "
+            "simulation contracts are planned additions to the Backend Protocol.",
         ),
     ),
     Capability(

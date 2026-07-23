@@ -146,7 +146,7 @@ def test_survival_likelihood_uses_density_or_survival() -> None:
     assert np.isfinite(piecewise.log_prob(2.5, event=False, rates=[0.2, 0.4], breaks=[2]))
 
 
-def test_blueprint_aliases() -> None:
+def test_distribution_aliases() -> None:
     assert families.Normal is families.Gaussian
     assert families.NB2 is families.NegativeBinomial2
     assert isinstance(

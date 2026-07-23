@@ -1,8 +1,8 @@
 # PyMixEF implementation architecture
 
-PyMixEF follows the blueprint's central rule: a scientific model is represented
-once in a versioned, immutable intermediate representation (IR), while estimation
-engines are replaceable consumers.
+PyMixEF follows one central rule: a scientific model is represented once in a
+versioned, immutable intermediate representation (IR), while estimation engines
+are replaceable consumers.
 
 The public import name and distribution are both `pymixef`; the human-facing name
 is **PyMixEF**.
@@ -46,12 +46,9 @@ are not represented as complete. Estimator entry points that exist for gated
 methods fail before optimization with a stable unsupported code and, where
 applicable, list the available lower-level primitives.
 
-The initial release implements foundation contracts and selected dense reference
-paths toward the Classical Core. It has not passed either blueprint stage gate.
 The reusable fit-payload suite covers every built-in backend, including
-deterministic repeat fitting, row alignment, and input immutability. It is not
-the full `ARCH-003` protocol: separate objective, gradient, optional
-Hessian-vector product, and simulation contracts remain open. Later-stage
-authoring and interchange semantics exist so those engines can be added
-without changing public model meaning; representability does not mean
-estimability.
+deterministic repeat fitting, row alignment, and input immutability. Separate
+objective, gradient, optional Hessian-vector product, and simulation contracts
+remain planned additions to `ARCH-003`. Authoring and interchange semantics
+allow new engines to be added without changing public model meaning;
+representability does not mean estimability.

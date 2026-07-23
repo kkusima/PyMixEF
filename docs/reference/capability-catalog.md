@@ -194,7 +194,7 @@ No capability-specific limitation or open gate is recorded in the registry.
 
 **Limitations / open gates**
 
-- A reusable fit-payload suite covers every built-in backend and checks validation, deterministic repeat fitting, input immutability, and row alignment. The blueprint's objective, gradient, optional Hessian-vector product, and simulation contracts are not yet part of the Backend Protocol.
+- A reusable fit-payload suite covers every built-in backend and checks validation, deterministic repeat fitting, input immutability, and row alignment. Objective, gradient, optional Hessian-vector product, and simulation contracts are planned additions to the Backend Protocol.
 ```
 
 ## Public API and data behavior
@@ -469,7 +469,7 @@ Gaussian ML/REML execution, scale targets, and inference gates.
 
 **Limitations / open gates**
 
-- The 0.1 reference engine uses dense marginal covariance and is not the blueprint's million-row sparse production core.
+- The reference engine uses dense marginal covariance; large-scale sparse execution requires the planned compiled backend.
 ```
 
 (capability-lmm-002)=
@@ -1197,7 +1197,7 @@ Benchmarking, reproducibility declarations, and numerical thread controls.
 
 **Limitations / open gates**
 
-- The current harness contains one reduced synthetic LMM workload and is not the blueprint's cross-platform performance corpus.
+- The current harness contains one reduced synthetic LMM workload; broader cross-platform performance coverage is planned.
 ```
 
 (capability-perf-002)=

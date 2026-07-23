@@ -28,8 +28,8 @@ reproducibility class. The current reusable fit-contract suite covers every
 built-in backend and fails if a newly registered built-in has no case. A new
 backend must pass {py:func}`pymixef.backends.base.validate_payload` and those
 behavior checks. `ARCH-003` nevertheless remains open because the Backend
-Protocol does not yet expose the blueprint's separate objective, gradient,
-optional Hessian-vector product, and simulation contracts.
+Protocol does not yet expose separate objective, gradient, optional
+Hessian-vector product, and simulation contracts.
 
 Numerical changes require independent derivative/reference tests, pathology
 tests, a change-impact category, and targeted benchmark reruns. Public model

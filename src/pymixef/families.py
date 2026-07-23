@@ -1705,7 +1705,7 @@ class PiecewiseExponential(SurvivalFamily):
         return float(second - mean**2)
 
 
-# Familiar aliases, including the names used in the blueprint examples.
+# Familiar aliases for common distribution names.
 Normal = Gaussian
 Student = StudentT
 Lognormal = LogNormal

@@ -5,7 +5,7 @@ likelihood.  It supports multiple independent random-effect blocks, correlated
 or diagonal within-group covariance, known observation weights, and an explicit
 structured residual covariance template.  It deliberately forms dense
 covariance matrices and is therefore a correctness/reference engine rather than
-the blueprint's eventual sparse production engine.
+a sparse high-scale production engine.
 """
 
 from __future__ import annotations

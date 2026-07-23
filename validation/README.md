@@ -10,9 +10,9 @@ pymixef traceability > traceability.json
 
 Each row states its implementation status, maturity, reproducibility class,
 source module, specification document, evidence, and known limitations. A true
-implementation status applies only to the narrowly named 0.1 capability; it is
-not a blueprint stage-gate result. The generated matrix is also embedded in
-every validation bundle created by `pymixef bundle`.
+implementation status applies to the narrowly named capability and its recorded
+evidence. The generated matrix is also embedded in every validation bundle
+created by `pymixef bundle`.
 
 These artifacts support context-of-use validation. They are evidence records,
 not independent verification reports, a universal regulatory approval, or a

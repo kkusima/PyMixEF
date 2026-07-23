@@ -76,7 +76,7 @@ jobs:
       - name: Validate package metadata and long description
         run: python -m twine check --strict dist/*
       - name: Store verified distributions
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: python-package-distributions
           path: dist/
@@ -90,7 +90,7 @@ jobs:
       contents: write
     steps:
       - name: Download verified distributions
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: python-package-distributions
           path: dist/
@@ -102,11 +102,15 @@ jobs:
           RELEASE_VERSION: ${{ needs.build.outputs.release_version }}
         shell: bash
         run: |
-          existing_commit="$(
+          if existing_commit="$(
             gh api \
               "repos/${GITHUB_REPOSITORY}/commits/${RELEASE_TAG}" \
-              --jq ".sha" 2>/dev/null || true
-          )"
+              --jq ".sha" 2>/dev/null
+          )"; then
+            :
+          else
+            existing_commit=""
+          fi
           if [[ -n "$existing_commit" && "$existing_commit" != "$RELEASE_COMMIT" ]]; then
             echo "::error::${RELEASE_TAG} already points to ${existing_commit}, not ${RELEASE_COMMIT}."
             exit 1
@@ -139,7 +143,7 @@ jobs:
       id-token: write
     steps:
       - name: Download verified distributions
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: python-package-distributions
           path: dist/

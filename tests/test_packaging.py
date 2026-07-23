@@ -150,6 +150,9 @@ def test_publish_workflow_creates_or_reuses_a_verified_github_release() -> None:
     assert "RELEASE_COMMIT: ${{ needs.build.outputs.release_commit }}" in release_job
     assert "gh api" in release_job
     assert "commits/${RELEASE_TAG}" in release_job
+    assert 'if existing_commit="$(' in release_job
+    assert 'existing_commit=""' in release_job
+    assert "|| true" not in release_job
     assert '"$existing_commit" != "$RELEASE_COMMIT"' in release_job
     assert re.search(r'gh release upload\s+\\?\s*"\$RELEASE_TAG"', release_job)
     assert "--clobber" in release_job

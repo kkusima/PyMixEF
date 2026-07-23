@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from pymixef.ir import ModelIR
 from pymixef.provenance import (
     RunManifest,
@@ -15,7 +17,9 @@ def test_fingerprints_are_order_stable() -> None:
     assert left == right
 
 
-def test_manifest_captures_thread_settings() -> None:
+def test_manifest_captures_thread_settings(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("PYMIXEF_BUILD_ID", raising=False)
+    monkeypatch.delenv("GITHUB_SHA", raising=False)
     manifest = RunManifest.capture(
         model_ir={"x": 1},
         data={"y": [1]},
@@ -27,6 +31,21 @@ def test_manifest_captures_thread_settings() -> None:
     assert environment_snapshot()["packages"]["numpy"]
     assert manifest.source["build_id"] == "unrecorded"
     assert manifest.source["git_commit"] == "unrecorded"
+
+
+def test_manifest_captures_ci_source_identifiers(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("PYMIXEF_BUILD_ID", "build-42")
+    monkeypatch.setenv("GITHUB_SHA", "0123456789abcdef")
+
+    manifest = RunManifest.capture(
+        model_ir={"x": 1},
+        data={"y": [1]},
+        engine="reference",
+        method="test",
+    )
+
+    assert manifest.source["build_id"] == "build-42"
+    assert manifest.source["git_commit"] == "0123456789abcdef"
 
 
 def test_model_ir_fingerprint_matches_object_and_dict_payload() -> None:

@@ -27,16 +27,16 @@ from .base import (
     BackendUnsupportedError,
     cho_solve,
     convergence_mapping,
-    covariance_from_hessian,
     covariance_slices,
     field,
     finite_gradient,
-    finite_hessian,
     logdet_from_cholesky,
     make_payload,
+    optimizer_covariance,
     prepare_data,
     random_covariance,
     safe_cholesky,
+    select_optimizer_result,
 )
 
 
@@ -403,7 +403,11 @@ class LaplaceGLMMBackend:
                 bounds=bounds,
                 options={"maxiter": int(maxiter), "ftol": tolerance, "gtol": tolerance},
             )
-            result = refined if refined.fun <= rescue.fun + 1e-7 else rescue
+            result = select_optimizer_result(
+                refined,
+                rescue,
+                objective_tolerance=1e-7,
+            )
 
         outer_hat = np.asarray(result.x, dtype=float)
         try:
@@ -414,20 +418,13 @@ class LaplaceGLMMBackend:
                 details={"optimizer_message": str(result.message)},
             ) from exc
 
-        if compute_hessian and outer_hat.size <= 14:
-            try:
-                outer_hessian = finite_hessian(objective, outer_hat)
-                outer_covariance, hessian_positive = covariance_from_hessian(outer_hessian)
-            except (ValueError, FloatingPointError, linalg.LinAlgError):
-                outer_covariance = np.full((outer_hat.size, outer_hat.size), np.nan)
-                hessian_positive = False
-        else:
-            inverse = getattr(result, "hess_inv", None)
-            try:
-                outer_covariance = np.asarray(inverse.todense(), dtype=float)
-            except (AttributeError, TypeError, ValueError):
-                outer_covariance = np.full((outer_hat.size, outer_hat.size), np.nan)
-            hessian_positive = None
+        outer_covariance, hessian_positive, curvature_source = optimizer_covariance(
+            objective,
+            outer_hat,
+            result,
+            compute_hessian=compute_hessian,
+            finite_difference_limit=14,
+        )
 
         beta, random_theta_hat, dispersion_hat = unpack_outer(outer_hat)
         natural_parameters: dict[str, float] = {
@@ -549,6 +546,7 @@ class LaplaceGLMMBackend:
                 "conditional_mode_gradient_inf_norm": final.mode.gradient_norm,
                 "separation_flag": separated,
                 "fixed_effect_rank": fixed_effect_rank,
+                "curvature_source": curvature_source,
             },
         )
         parameter_names = list(compiled.fixed_names) + natural_covariance_names

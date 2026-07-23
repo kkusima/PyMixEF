@@ -32,14 +32,14 @@ from .base import (
     BackendUnsupportedError,
     cho_solve,
     convergence_mapping,
-    covariance_from_hessian,
     field,
     finite_gradient,
-    finite_hessian,
     logdet_from_cholesky,
     make_payload,
+    optimizer_covariance,
     prepare_data,
     safe_cholesky,
+    select_optimizer_result,
 )
 
 _ORDER_DEPENDENT_STRUCTURES = frozenset(
@@ -881,7 +881,11 @@ class MMRMBackend:
                     bounds=bounds,
                     options={"maxiter": int(maxiter), "ftol": tolerance, "gtol": tolerance},
                 )
-                result = refined if refined.fun <= rescue.fun + 1e-8 else rescue
+                result = select_optimizer_result(
+                    refined,
+                    rescue,
+                    objective_tolerance=1e-8,
+                )
             theta_hat = np.asarray(result.x)
             success = bool(result.success and np.isfinite(result.fun))
             optimizer_message = str(result.message)
@@ -902,23 +906,13 @@ class MMRMBackend:
         except (ValueError, linalg.LinAlgError) as exc:
             raise BackendNumericalError("final MMRM covariance is not positive definite") from exc
 
-        if theta_hat.size and compute_hessian and theta_hat.size <= 25:
-            try:
-                theta_hessian = finite_hessian(objective, theta_hat)
-                theta_covariance, hessian_positive = covariance_from_hessian(theta_hessian)
-            except (ValueError, FloatingPointError, linalg.LinAlgError):
-                theta_covariance = np.full((theta_hat.size, theta_hat.size), np.nan)
-                hessian_positive = False
-        elif theta_hat.size:
-            inverse = getattr(result, "hess_inv", None)  # type: ignore[possibly-undefined]
-            try:
-                theta_covariance = np.asarray(inverse.todense(), dtype=float)
-            except (AttributeError, TypeError, ValueError):
-                theta_covariance = np.full((theta_hat.size, theta_hat.size), np.nan)
-            hessian_positive = None
-        else:
-            theta_covariance = np.zeros((0, 0))
-            hessian_positive = True
+        theta_covariance, hessian_positive, curvature_source = optimizer_covariance(
+            objective,
+            theta_hat,
+            result if theta_hat.size else None,
+            compute_hessian=compute_hessian,
+            finite_difference_limit=25,
+        )
 
         natural_parameters = {
             name: float(value) for name, value in zip(compiled.fixed_names, final.beta, strict=True)
@@ -1139,6 +1133,7 @@ class MMRMBackend:
                 "fixed_effect_rank": final.rank,
                 "subjects": len(subject_levels),
                 "visits": q,
+                "curvature_source": curvature_source,
             },
         )
         fitted = compiled.X @ final.beta

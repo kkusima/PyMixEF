@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+import pymixef.backends.lmm as lmm_backend
 from pymixef.backends.base import convergence_mapping
 from pymixef.backends.lmm import fit_lmm
 from pymixef.covariance import AR1
@@ -124,3 +125,44 @@ def test_numerically_suspect_convergence_has_coded_warnings() -> None:
     assert report["status"] == "warning"
     codes = {item["code"] for item in report["warnings"]}
     assert {"NUM-GRADIENT-LARGE-001", "NUM-HESSIAN-INDEFINITE-001"} <= codes
+
+
+def test_successful_powell_rescue_survives_failed_refinement(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    real_minimize = lmm_backend.optimize.minimize
+    methods: list[str] = []
+    rescue_objective: float | None = None
+
+    def controlled_minimize(*args: object, **kwargs: object) -> object:
+        nonlocal rescue_objective
+        result = real_minimize(*args, **kwargs)
+        method = str(kwargs["method"])
+        methods.append(method)
+        if len(methods) == 1:
+            result.success = False
+            result.message = "forced initial line-search failure"
+        elif method == "Powell":
+            rescue_objective = float(result.fun)
+        else:
+            assert rescue_objective is not None
+            result.success = False
+            result.fun = rescue_objective - 1e-10
+            result.message = "forced refinement line-search failure"
+        return result
+
+    monkeypatch.setattr(lmm_backend.optimize, "minimize", controlled_minimize)
+    result = fit_lmm(
+        _random_intercept_data(),
+        method="REML",
+        maxiter=400,
+        compute_hessian=False,
+    )
+
+    assert methods == ["L-BFGS-B", "Powell", "L-BFGS-B"]
+    assert result["convergence"]["optimizer_terminated"] is True
+    assert result["convergence"]["message"] == "Optimization terminated successfully."
+    assert result["convergence"]["curvature_source"] == "observed-finite-difference-fallback"
+    covariance = np.asarray(result["parameter_covariance"])
+    assert np.all(np.isfinite(covariance))
+    np.testing.assert_allclose(covariance, covariance.T)

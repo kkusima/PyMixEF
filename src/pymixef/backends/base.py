@@ -602,6 +602,101 @@ def finite_gradient(
     return result
 
 
+def select_optimizer_result(
+    refined: Any,
+    rescue: Any,
+    *,
+    objective_tolerance: float,
+) -> Any:
+    """Prefer successful finite termination before comparing objective values.
+
+    A line-search refinement can improve an objective by floating-point noise
+    while still reporting an abnormal termination.  In that case, retaining a
+    successfully terminated derivative-free rescue is more informative than
+    replacing it with the failed refinement.
+    """
+
+    refined_objective = float(getattr(refined, "fun", np.nan))
+    rescue_objective = float(getattr(rescue, "fun", np.nan))
+    refined_finite = bool(np.isfinite(refined_objective))
+    rescue_finite = bool(np.isfinite(rescue_objective))
+    refined_converged = bool(getattr(refined, "success", False) and refined_finite)
+    rescue_converged = bool(getattr(rescue, "success", False) and rescue_finite)
+
+    if refined_converged != rescue_converged:
+        converged = refined if refined_converged else rescue
+        failed = rescue if refined_converged else refined
+        converged_objective = refined_objective if refined_converged else rescue_objective
+        failed_objective = rescue_objective if refined_converged else refined_objective
+        if np.isfinite(failed_objective) and (
+            failed_objective + objective_tolerance < converged_objective
+        ):
+            return failed
+        return converged
+    if refined_finite != rescue_finite:
+        return refined if refined_finite else rescue
+    if refined_finite and refined_objective <= rescue_objective + objective_tolerance:
+        return refined
+    return rescue
+
+
+def optimizer_covariance(
+    function: Any,
+    point: ArrayLike,
+    result: Any,
+    *,
+    compute_hessian: bool,
+    finite_difference_limit: int,
+) -> tuple[NDArray[np.float64], bool | None, str]:
+    """Return auditable optimizer-scale covariance at the selected optimum."""
+
+    location = np.asarray(point, dtype=float)
+    if location.ndim != 1:
+        raise ValueError("An optimizer point must be one-dimensional.")
+    if location.size == 0:
+        return np.zeros((0, 0)), True, "not-required"
+
+    def observed_covariance(source: str) -> tuple[NDArray[np.float64], bool, str]:
+        try:
+            hessian = finite_hessian(function, location)
+            covariance, positive = covariance_from_hessian(hessian)
+        except (ValueError, FloatingPointError, linalg.LinAlgError) as exc:
+            raise BackendNumericalError(
+                "could not calculate finite covariance at the selected optimizer result",
+                details={"curvature_source": source, "parameters": int(location.size)},
+            ) from exc
+        return covariance, positive, source
+
+    if compute_hessian and location.size <= finite_difference_limit:
+        return observed_covariance("observed-finite-difference")
+
+    inverse = getattr(result, "hess_inv", None)
+    try:
+        dense_inverse = inverse.todense() if hasattr(inverse, "todense") else inverse
+        covariance = np.asarray(dense_inverse, dtype=float)
+        valid_inverse = bool(
+            covariance.shape == (location.size, location.size)
+            and np.all(np.isfinite(covariance))
+            and np.allclose(covariance, covariance.T, rtol=1e-8, atol=1e-10)
+        )
+    except (TypeError, ValueError):
+        valid_inverse = False
+        covariance = np.empty((0, 0))
+    if valid_inverse:
+        return (covariance + covariance.T) / 2.0, None, "optimizer-inverse-hessian"
+
+    if location.size <= finite_difference_limit:
+        return observed_covariance("observed-finite-difference-fallback")
+
+    raise BackendNumericalError(
+        "the selected optimizer result did not provide a valid inverse Hessian",
+        details={
+            "parameters": int(location.size),
+            "finite_difference_limit": int(finite_difference_limit),
+        },
+    )
+
+
 def covariance_from_hessian(hessian: ArrayLike) -> tuple[NDArray[np.float64], bool]:
     """Return a symmetric generalized inverse and definiteness flag."""
 
@@ -850,9 +945,11 @@ __all__ = [
     "finite_hessian",
     "logdet_from_cholesky",
     "make_payload",
+    "optimizer_covariance",
     "prepare_data",
     "prepare_random_block",
     "random_covariance",
     "safe_cholesky",
+    "select_optimizer_result",
     "validate_payload",
 ]

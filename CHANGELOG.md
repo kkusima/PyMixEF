@@ -10,6 +10,10 @@
   artifact ignore rules.
 - Updated installation and release documentation to reflect the live PyPI and
   Read the Docs projects.
+- Reworked PyPI publishing into a manual workflow dispatched from `main`; the
+  workflow now derives the release tag from package metadata, validates every
+  synchronized version, creates or reuses the matching GitHub release, and
+  publishes verified artifacts with OIDC Trusted Publishing.
 
 ## 0.1.0 - 2026-07-23
 

@@ -5,8 +5,8 @@ Actions. The workflow exchanges a short-lived OpenID Connect identity for
 publish permission; it does not use a stored PyPI password or API token.
 
 Publishing a filename and version to PyPI is irreversible. Complete every
-prerequisite and obtain the intended maintainer approval before creating a
-GitHub release.
+prerequisite and obtain the intended maintainer approval before running the
+publishing workflow.
 
 ## Repository configuration
 
@@ -29,10 +29,11 @@ Before publishing a release, confirm that the project retains:
    - Workflow filename: `publish.yml`
    - Environment: `pypi`
 
-The workflow grants `id-token: write` only to the two-step publish job. The
-separate build job checks out the release tag, verifies that it matches the
-package version, builds the distributions, runs strict Twine metadata checks,
-and transfers only those verified artifacts to the publish job.
+The workflow grants `id-token: write` only to the publish job. It derives the
+release tag from the version in `pyproject.toml`, verifies every synchronized
+version field, builds the distributions, runs strict Twine metadata checks,
+creates or reuses the matching GitHub release, and transfers only verified
+artifacts to the OIDC-backed PyPI upload.
 
 Official setup references:
 
@@ -79,14 +80,22 @@ Start from a reviewed, clean checkout and an isolated Python environment.
    Replace `v0.1.1` with `v` followed by the version in `pyproject.toml`.
 6. Review the wheel and source archive contents, install the wheel in a fresh
    environment, and run an import/CLI smoke test.
-7. Commit the release changes, let required CI complete, and create the protected
-   `vX.Y.Z` tag.
+7. Commit and push the release changes to `main`, then let required CI complete.
+   Do **not** create a `vX.Y.Z` tag or GitHub release by hand; the publishing
+   workflow owns both operations.
 
 ## Publish
 
-Create a GitHub release for the reviewed `vX.Y.Z` tag. Publishing the release
-triggers `.github/workflows/publish.yml`; there is deliberately no manual
-workflow-dispatch path and no token-based fallback.
+Open **Actions → Publish to PyPI → Run workflow** in GitHub and run
+`.github/workflows/publish.yml` from `main`. The workflow reads the package
+version from `pyproject.toml`, derives the corresponding `vX.Y.Z` tag, verifies
+that all release metadata agrees, and creates or reuses the matching GitHub
+release before publishing through PyPI Trusted Publishing.
+
+Do **not** create the tag or GitHub release manually. A hand-created reference
+can point at code whose package metadata still names another version and will
+cause the release guard to fail. The manual action run from reviewed `main` is
+the single supported publishing entry point; there is no token-based fallback.
 
 The `pypi` environment approval is the final human authorization boundary.
 Review the tag, version, changelog, and build-job output before approving it.
@@ -110,6 +119,7 @@ After the workflow succeeds:
 3. Confirm the installed version matches the release and retain the workflow,
    artifact, and validation references required by the project governance.
 
-If any check fails before upload, fix the release commit and create a new tag or
-release candidate. Never reuse an already-published version or overwrite a
+If any check fails before upload, fix the release commit on `main`, let CI pass,
+and run the publishing workflow again. Do not repair the release by creating or
+moving tags manually. Never reuse an already-published version or overwrite a
 published distribution filename.

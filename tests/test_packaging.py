@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+import shutil
 import subprocess
 import sys
 import tomllib
@@ -8,6 +10,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DOCS_URL = "https://pymixef.readthedocs.io/en/latest/"
 REPOSITORY_URL = "https://github.com/kkusima/PyMixEF"
+
+
+def _workflow_job(workflow: str, name: str) -> str:
+    """Return one top-level job block from a GitHub Actions workflow."""
+
+    jobs = workflow.split("\njobs:\n", maxsplit=1)[1]
+    match = re.search(
+        rf"(?ms)^  {re.escape(name)}:\n.*?(?=^  [A-Za-z0-9_-]+:\n|\Z)",
+        jobs,
+    )
+    assert match is not None, f"publish workflow is missing the {name!r} job"
+    return match.group(0)
 
 
 def test_notebook_extra_and_source_manifest_are_complete() -> None:
@@ -96,25 +110,78 @@ def test_release_check_builds_and_runs_strict_twine_validation() -> None:
     assert "$(PYTHON) -m twine check --strict dist/*" in release_target
 
 
+def test_publish_workflow_is_manual_main_only_and_derives_the_release_tag() -> None:
+    workflow = (ROOT / ".github/workflows/publish.yml").read_text(encoding="utf-8")
+
+    trigger_match = re.search(
+        r"(?ms)^on:\n(?P<body>.*?)(?=^[A-Za-z][A-Za-z0-9_-]*:)",
+        workflow,
+    )
+    assert trigger_match is not None
+    trigger = trigger_match.group("body")
+    events = set(re.findall(r"(?m)^  ([A-Za-z][A-Za-z0-9_-]*):", trigger))
+    assert events == {"workflow_dispatch"}
+    assert "inputs:" not in trigger
+    assert "github.event.release" not in workflow
+
+    build_job = _workflow_job(workflow, "build")
+    assert 'python-version: "3.13"' in build_job
+    assert "refs/heads/main" in build_job
+    assert "exit 1" in build_job
+    assert "python scripts/check_release_tag.py --print-tag" in build_job
+    assert "GITHUB_OUTPUT" in build_job
+    assert "commit=$GITHUB_SHA" in build_job
+
+    notebook_gate = build_job.index("python scripts/validate_notebooks.py")
+    build = build_job.index("python -m build")
+    upload = build_job.index("actions/upload-artifact")
+    assert notebook_gate < build < upload
+
+
+def test_publish_workflow_creates_or_reuses_a_verified_github_release() -> None:
+    workflow = (ROOT / ".github/workflows/publish.yml").read_text(encoding="utf-8")
+    release_job = _workflow_job(workflow, "release")
+
+    assert re.search(r"(?m)^\s+needs:\s*build\s*$", release_job)
+    assert "contents: write" in release_job
+    assert "actions/download-artifact" in release_job
+    assert 'gh release view "$RELEASE_TAG"' in release_job
+    assert re.search(r'gh release create\s+\\?\s*"\$RELEASE_TAG"', release_job)
+    assert "RELEASE_COMMIT: ${{ needs.build.outputs.release_commit }}" in release_job
+    assert "gh api" in release_job
+    assert "commits/${RELEASE_TAG}" in release_job
+    assert '"$existing_commit" != "$RELEASE_COMMIT"' in release_job
+    assert re.search(r'gh release upload\s+\\?\s*"\$RELEASE_TAG"', release_job)
+    assert "--clobber" in release_job
+
+
 def test_publish_workflow_uses_a_minimal_trusted_publisher_job() -> None:
     workflow = (ROOT / ".github/workflows/publish.yml").read_text(encoding="utf-8")
-    assert "types: [published]" in workflow
-    assert "workflow_dispatch" not in workflow
-    assert "environment:\n      name: pypi" in workflow
-    assert "url: https://pypi.org/project/pymixef/" in workflow
-    assert "id-token: write" in workflow
-    assert "pypa/gh-action-pypi-publish@release/v1" in workflow
-    assert 'python-version: "3.13"' in workflow
+    publish_job = _workflow_job(workflow, "publish")
+
+    assert re.search(
+        r"(?m)^\s+needs:\s*(?:release|\[[^\]]*\brelease\b[^\]]*\])\s*$",
+        publish_job,
+    )
+    assert "environment:\n      name: pypi" in publish_job
+    assert "url: https://pypi.org/project/pymixef/" in publish_job
+    permission_block = publish_job.split("permissions:", maxsplit=1)[1].split(
+        "steps:",
+        maxsplit=1,
+    )[0]
+    permissions = dict(
+        re.findall(r"(?m)^\s+([A-Za-z][A-Za-z0-9-]*):\s*([A-Za-z]+)\s*$", permission_block)
+    )
+    assert permissions == {"id-token": "write"}
+
+    assert "actions/download-artifact" in publish_job
+    assert "pypa/gh-action-pypi-publish@release/v1" in publish_job
+    assert "actions/checkout" not in publish_job
+    assert "actions/setup-python" not in publish_job
+    assert not re.search(r"(?m)^\s+run:", publish_job)
     assert "password:" not in workflow
     assert "api-token:" not in workflow
     assert workflow.count("id-token: write") == 1
-    assert "RELEASE_TAG: ${{ github.event.release.tag_name }}" in workflow
-    assert 'python scripts/check_release_tag.py "$RELEASE_TAG"' in workflow
-    assert 'check_release_tag.py "${{' not in workflow
-    notebook_gate = workflow.index("python scripts/validate_notebooks.py")
-    build = workflow.index("python -m build")
-    upload = workflow.index("actions/upload-artifact")
-    assert notebook_gate < build < upload
 
     ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     assert "notebooks:\n    name: Tutorial notebooks" in ci
@@ -126,6 +193,15 @@ def test_release_tag_guard_accepts_only_the_static_project_version() -> None:
     with (ROOT / "pyproject.toml").open("rb") as stream:
         version = tomllib.load(stream)["project"]["version"]
     command = [sys.executable, str(ROOT / "scripts/check_release_tag.py")]
+
+    derived = subprocess.run(
+        [*command, "--print-tag"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert derived.returncode == 0, derived.stderr
+    assert derived.stdout.strip() == f"v{version}"
 
     accepted = subprocess.run(
         [*command, f"v{version}"],
@@ -143,6 +219,49 @@ def test_release_tag_guard_accepts_only_the_static_project_version() -> None:
     )
     assert rejected.returncode != 0
     assert "does not match expected tag" in rejected.stderr
+
+
+def test_release_tag_guard_rejects_desynchronized_release_metadata(tmp_path: Path) -> None:
+    synchronized_files = (
+        "pyproject.toml",
+        "src/pymixef/_version.py",
+        "CITATION.cff",
+        "CHANGELOG.md",
+        "native/CMakeLists.txt",
+        "native/src/core.cpp",
+        "native/tests/test_core.cpp",
+        "r/pymixef/DESCRIPTION",
+    )
+    for relative in synchronized_files:
+        source = ROOT / relative
+        destination = tmp_path / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+
+    with (ROOT / "pyproject.toml").open("rb") as stream:
+        version = tomllib.load(stream)["project"]["version"]
+    citation = tmp_path / "CITATION.cff"
+    citation.write_text(
+        citation.read_text(encoding="utf-8").replace(
+            f"version: {version}",
+            "version: 999.0.0",
+        ),
+        encoding="utf-8",
+    )
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "scripts/check_release_tag.py"),
+            "--print-tag",
+            "--root",
+            str(tmp_path),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "CITATION.cff is not synchronized" in result.stderr
 
 
 def test_committed_notebook_results_are_current_and_error_free() -> None:

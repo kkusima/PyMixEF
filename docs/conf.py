@@ -111,7 +111,7 @@ html_show_sourcelink = True
 html_show_sphinx = False
 html_copy_source = True
 html_permalinks_icon = "¶"
-html_baseurl = "https://pymixef.readthedocs.io/"
+html_baseurl = "https://pymixef.readthedocs.io/en/latest/"
 
 html_theme_options = {
     "navbar_align": "left",

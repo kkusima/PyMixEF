@@ -8,24 +8,24 @@ Publishing a filename and version to PyPI is irreversible. Complete every
 prerequisite and obtain the intended maintainer approval before creating a
 GitHub release.
 
-## One-time prerequisites
+## Repository configuration
 
-The repository owner, public repository URL, and individual maintainer identity
-have not been chosen in this source tree. Do not publish until the project has:
+The canonical source repository is
+[`kkusima/PyMixEF`](https://github.com/kkusima/PyMixEF), the package is
+published as [`pymixef`](https://pypi.org/project/pymixef/), and the public
+documentation is hosted on
+[Read the Docs](https://pymixef.readthedocs.io/en/latest/).
 
-1. A canonical public GitHub repository controlled by the intended maintainers.
-2. A confirmed right to the `pymixef` project name on PyPI. For a first release,
-   an authorized maintainer can configure a pending publisher.
-3. Real maintainer recovery and security-contact arrangements. Add the canonical
-   repository, documentation, and issue-tracker links to `[project.urls]` only
-   after those URLs exist; do not substitute placeholders.
-4. A GitHub environment named `pypi`, configured with required reviewers. Apply
+Before publishing a release, confirm that the project retains:
+
+1. Maintainer recovery and security-contact arrangements.
+2. A GitHub environment named `pypi`, configured with required reviewers. Apply
    branch or tag protection appropriate to the repository's governance.
-5. A PyPI Trusted Publisher whose values exactly match:
+3. A PyPI Trusted Publisher whose values exactly match:
 
    - PyPI project: `pymixef`
-   - GitHub owner: the actual repository owner
-   - GitHub repository: the actual repository name
+   - GitHub owner: `kkusima`
+   - GitHub repository: `PyMixEF`
    - Workflow filename: `publish.yml`
    - Environment: `pypi`
 

@@ -6,6 +6,8 @@ import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+DOCS_URL = "https://pymixef.readthedocs.io/en/latest/"
+REPOSITORY_URL = "https://github.com/kkusima/PyMixEF"
 
 
 def test_notebook_extra_and_source_manifest_are_complete() -> None:
@@ -19,6 +21,29 @@ def test_notebook_extra_and_source_manifest_are_complete() -> None:
     assert "recursive-include examples *.py *.ipynb *.md" in manifest
     assert "prune examples/notebooks/.ipynb_checkpoints" in manifest
     assert "recursive-include scripts *.py" in manifest
+
+
+def test_public_project_links_are_absolute_and_consistent() -> None:
+    with (ROOT / "pyproject.toml").open("rb") as stream:
+        metadata = tomllib.load(stream)
+
+    assert metadata["project"]["urls"] == {
+        "Homepage": REPOSITORY_URL,
+        "Documentation": DOCS_URL,
+        "Repository": REPOSITORY_URL,
+        "Issues": f"{REPOSITORY_URL}/issues",
+        "Changelog": f"{REPOSITORY_URL}/blob/main/CHANGELOG.md",
+    }
+
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert DOCS_URL in readme
+    assert "Before the first PyPI release" not in readme
+    for relative_target in (
+        "](docs/",
+        "](examples/",
+        "](validation/",
+    ):
+        assert relative_target not in readme
 
 
 def test_documentation_extra_and_read_the_docs_configuration_are_complete() -> None:
@@ -51,6 +76,9 @@ def test_documentation_extra_and_read_the_docs_configuration_are_complete() -> N
     workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     assert "python scripts/audit_documentation.py" in workflow
 
+    conf = (ROOT / "docs/conf.py").read_text(encoding="utf-8")
+    assert f'html_baseurl = "{DOCS_URL}"' in conf
+
 
 def test_release_check_builds_and_runs_strict_twine_validation() -> None:
     makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
@@ -73,6 +101,7 @@ def test_publish_workflow_uses_a_minimal_trusted_publisher_job() -> None:
     assert "types: [published]" in workflow
     assert "workflow_dispatch" not in workflow
     assert "environment:\n      name: pypi" in workflow
+    assert "url: https://pypi.org/project/pymixef/" in workflow
     assert "id-token: write" in workflow
     assert "pypa/gh-action-pypi-publish@release/v1" in workflow
     assert 'python-version: "3.13"' in workflow

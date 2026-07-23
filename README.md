@@ -5,6 +5,11 @@ pharmacometrics. Its architecture follows one central rule: define the scientifi
 model once in a typed, versioned intermediate representation, then let compatible
 estimation engines consume that representation.
 
+[Documentation](https://pymixef.readthedocs.io/en/latest/) ·
+[PyPI](https://pypi.org/project/pymixef/) ·
+[Source](https://github.com/kkusima/PyMixEF) ·
+[Issue tracker](https://github.com/kkusima/PyMixEF/issues)
+
 ## Install
 
 PyMixEF requires Python 3.11 or newer.
@@ -34,18 +39,16 @@ Jupyter runtime:
 python -m pip install "pymixef[notebooks]"
 ```
 
-Before the first PyPI release, use `python -m pip install -e ".[notebooks]"`
-from a source checkout. Maintainer publication prerequisites and the
-Trusted Publishing procedure are documented in
-[docs/publishing.md](docs/publishing.md).
-
-The [ten tutorial notebooks](examples/notebooks/README.md) are committed with
-reviewed results, multiple scientific figures, and assertion-backed checks, so
-GitHub renders complete worked examples before a reader launches a kernel.
+The [ten worked tutorials](https://pymixef.readthedocs.io/en/latest/tutorials/)
+are backed by
+[pre-executed Jupyter notebooks](https://github.com/kkusima/PyMixEF/tree/main/examples/notebooks)
+with reviewed results, multiple scientific figures, and assertion-backed checks.
+GitHub therefore renders complete worked examples before a reader launches a
+kernel.
 
 ## Documentation
 
-The [complete documentation](docs/index.md) includes:
+The [complete documentation](https://pymixef.readthedocs.io/en/latest/) includes:
 
 - installation profiles and a five-minute quickstart;
 - an analysis chooser and full LMM, GLMM, MMRM, PK, ODE, and pharmacometrics
@@ -58,7 +61,7 @@ The [complete documentation](docs/index.md) includes:
   Python module;
 - a searchable catalog of all 56 evidence-gated capabilities.
 
-To build the Read the Docs site locally:
+To build and preview the documentation locally:
 
 ```bash
 python -m pip install -e ".[docs]"
@@ -117,9 +120,10 @@ events = canonicalize_events(
 )
 ```
 
-See [the documentation map](docs/index.md), [the validation policy](docs/validation.md),
-[the public validation artifacts](validation/README.md), and
-[the warning catalog](docs/warnings.md).
+See [the documentation map](https://pymixef.readthedocs.io/en/latest/),
+[the validation policy](https://pymixef.readthedocs.io/en/latest/validation/),
+[the public validation artifacts](https://github.com/kkusima/PyMixEF/blob/main/validation/README.md),
+and [the warning catalog](https://pymixef.readthedocs.io/en/latest/warnings/).
 
 ## Scientific and regulatory scope
 

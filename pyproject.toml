@@ -32,6 +32,13 @@ dependencies = [
   "scipy>=1.11",
 ]
 
+[project.urls]
+Homepage = "https://github.com/kkusima/PyMixEF"
+Documentation = "https://pymixef.readthedocs.io/en/latest/"
+Repository = "https://github.com/kkusima/PyMixEF"
+Issues = "https://github.com/kkusima/PyMixEF/issues"
+Changelog = "https://github.com/kkusima/PyMixEF/blob/main/CHANGELOG.md"
+
 [project.optional-dependencies]
 data = [
   "pandas>=2.0",

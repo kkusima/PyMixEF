@@ -49,7 +49,7 @@ python -m pip install "pymixef[data,notebooks,report,validation]"
 An editable install reflects local source changes immediately:
 
 ```bash
-git clone YOUR_PYMIXEF_REPOSITORY_URL
+git clone https://github.com/kkusima/PyMixEF.git
 cd PyMixEF
 python -m venv .venv
 source .venv/bin/activate
@@ -62,9 +62,6 @@ On Windows PowerShell, activate with:
 .\.venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev,notebooks,docs]"
 ```
-
-The placeholder repository URL above is intentional: this source tree does not
-declare an official source URL in package metadata yet.
 
 ## Verify the installation
 
@@ -96,7 +93,8 @@ access unless you use local copies or a package mirror.
 
 **`No matching distribution found`**
 : Confirm that the active interpreter is CPython 3.11–3.13 and update `pip`.
-  Before an official PyPI release exists, install from a source checkout.
+  If a package index or mirror has not synchronized yet, install from the
+  canonical source checkout.
 
 **A dataframe type is not recognized**
 : Install the `data` extra and verify that the dataframe library is available in
@@ -118,4 +116,3 @@ access unless you use local copies or a package mirror.
 
 Continue to the [five-minute quickstart](quickstart.md), or go directly to
 [choosing an analysis](choose-analysis.md).
-

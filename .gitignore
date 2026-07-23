@@ -3,11 +3,15 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .coverage
+.coverage.*
+.coverage [0-9]*
 .mypy_cache/
 .pytest_cache/
 .ruff_cache/
 .venv/
 build/
+coverage.json
+coverage.xml
 dist/
 htmlcov/
 docs/_build/

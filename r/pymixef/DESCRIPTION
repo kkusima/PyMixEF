@@ -1,6 +1,6 @@
 Package: pymixef
 Title: R Interface to PyMixEF
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("PyMixEF", "Contributors", role = c("aut", "cre"),
                   email = "maintainers@example.invalid")
 Description: Thin reticulate interface to the PyMixEF Python engine. Model

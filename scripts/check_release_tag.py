@@ -24,7 +24,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Check a vX.Y.Z release tag against PyMixEF's static version.",
     )
-    parser.add_argument("tag", help="Release tag, for example v0.1.0")
+    parser.add_argument("tag", help="Release tag, for example v0.1.1")
     parser.add_argument(
         "--root",
         type=Path,

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.1 - 2026-07-23
+
+- Added canonical PyPI project links for the live documentation, source
+  repository, issue tracker, and changelog.
+- Replaced repository-relative links in the PyPI long description with public
+  Read the Docs and GitHub URLs.
+- Removed accidentally committed coverage databases and expanded coverage
+  artifact ignore rules.
+- Updated installation and release documentation to reflect the live PyPI and
+  Read the Docs projects.
+
 ## 0.1.0 - 2026-07-23
 
 - Renamed the project and import namespace to PyMixEF / `pymixef`.

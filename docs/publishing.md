@@ -73,10 +73,10 @@ Start from a reviewed, clean checkout and an isolated Python environment.
 5. Check the planned tag explicitly:
 
    ```bash
-   python scripts/check_release_tag.py v0.1.0
+   python scripts/check_release_tag.py v0.1.1
    ```
 
-   Replace `v0.1.0` with `v` followed by the version in `pyproject.toml`.
+   Replace `v0.1.1` with `v` followed by the version in `pyproject.toml`.
 6. Review the wheel and source archive contents, install the wheel in a fresh
    environment, and run an import/CLI smoke test.
 7. Commit the release changes, let required CI complete, and create the protected

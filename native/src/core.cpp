@@ -8,7 +8,7 @@
 extern "C" {
 
 const char* pymixef_core_version(void) {
-    return "0.1.0";
+    return "0.1.1";
 }
 
 int pymixef_weighted_sum_squares(
@@ -75,4 +75,3 @@ int pymixef_cholesky_lower(
 }
 
 }  // extern "C"
-

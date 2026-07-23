@@ -5,7 +5,7 @@
 #include <string_view>
 
 int main() {
-    if (std::string_view(pymixef_core_version()) != "0.1.0") {
+    if (std::string_view(pymixef_core_version()) != "0.1.1") {
         std::cerr << "unexpected native-core ABI version\n";
         return 1;
     }

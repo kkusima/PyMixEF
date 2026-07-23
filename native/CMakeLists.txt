@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(pymixef_core VERSION 0.1.0 LANGUAGES CXX)
+project(pymixef_core VERSION 0.1.1 LANGUAGES CXX)
 
 option(PYMIXEF_BUILD_TESTS "Build the native conformance smoke test" ON)
 
@@ -28,4 +28,3 @@ endif()
 
 install(TARGETS pymixef_core)
 install(FILES include/pymixef_core.h DESTINATION include)
-

@@ -82,6 +82,13 @@ the scalar calculation directly.
 {py:func}`pymixef.pharmacometrics.estimation.finite_difference_hessian` support transparent
 numerical checks.
 
+When an optimizer reports precision loss, PyMixEF accepts the mode only if
+these independent checks find a finite objective, a gradient within tolerance,
+and a positive-definite Hessian. The optimizer warning remains attached to the
+result so the numerical history is not hidden. With `require_success=True`,
+the independent gradient and Hessian checks are mandatory even when the
+optimizer itself reports success.
+
 ## Laplace population objective
 
 {py:func}`pymixef.pharmacometrics.estimation.laplace_population_objective`

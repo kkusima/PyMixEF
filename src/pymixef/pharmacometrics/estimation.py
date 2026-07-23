@@ -28,6 +28,8 @@ from scipy.special import log_ndtr
 
 from .pk import ObservationError
 
+_CONDITIONAL_GRADIENT_TOLERANCE = 1e-4
+
 
 class EstimationError(RuntimeError):
     """Base class for pharmacometric estimation failures."""
@@ -467,10 +469,17 @@ def find_conditional_mode(
         covariance = None
         warnings.append("NLME-HESSIAN-NONPOSITIVE-001")
     gradient_norm = float(np.linalg.norm(gradient, ord=np.inf))
+    gradient_tolerance = _CONDITIONAL_GRADIENT_TOLERANCE
     if not result.success:
         warnings.append("NLME-CONDITIONAL-OPTIMIZER-001")
-    if gradient_norm > max(1e-4, tolerance * 100.0):
+    if not np.isfinite(gradient_norm) or gradient_norm > gradient_tolerance:
         warnings.append("NLME-CONDITIONAL-GRADIENT-001")
+    independently_verified = bool(
+        np.isfinite(components.total)
+        and np.isfinite(gradient_norm)
+        and gradient_norm <= gradient_tolerance
+        and positive_definite
+    )
     mode_result = ConditionalModeResult(
         eta,
         components.total,
@@ -479,7 +488,7 @@ def find_conditional_mode(
         gradient,
         hessian,
         covariance,
-        bool(result.success),
+        bool(result.success or independently_verified),
         str(result.message),
         int(getattr(result, "nit", 0)),
         int(getattr(result, "nfev", 0)),
@@ -487,7 +496,12 @@ def find_conditional_mode(
         positive_definite,
         tuple(warnings),
     )
-    if require_success and (not mode_result.success or not positive_definite):
+    if require_success and (
+        not mode_result.success
+        or not positive_definite
+        or not np.isfinite(gradient_norm)
+        or gradient_norm > gradient_tolerance
+    ):
         raise ConditionalModeError(
             f"conditional mode failed: {mode_result.message}; warnings={mode_result.warning_codes}"
         )

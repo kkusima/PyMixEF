@@ -1,7 +1,11 @@
+from types import SimpleNamespace
+
 import numpy as np
 import pytest
 
+import pymixef.pharmacometrics.estimation as estimation_module
 from pymixef.pharmacometrics import (
+    ConditionalModeError,
     ConditionalObjective,
     Dose,
     DSLValidationError,
@@ -159,6 +163,76 @@ def test_conditional_mode_objective_retains_residual_interaction() -> None:
     population = laplace_population_objective([objective])
     assert np.isfinite(population.objective)
     assert len(population.modes) == 1
+
+
+def _quadratic_conditional_objective() -> ConditionalObjective:
+    observations = np.array([0.0])
+    return ConditionalObjective(
+        observations,
+        lambda eta: np.array([eta[0]]),
+        np.array([[1.0]]),
+        additive(1.0),
+    )
+
+
+def test_conditional_mode_accepts_independently_verified_precision_loss(monkeypatch) -> None:
+    objective = _quadratic_conditional_objective()
+
+    def report_precision_loss(*args, **kwargs):
+        return SimpleNamespace(
+            x=np.array([0.0]),
+            success=False,
+            message="Desired error not necessarily achieved due to precision loss.",
+            nit=4,
+            nfev=30,
+        )
+
+    monkeypatch.setattr(estimation_module, "minimize", report_precision_loss)
+    mode = find_conditional_mode(objective, require_success=True)
+
+    assert mode.success
+    assert mode.hessian_positive_definite
+    assert mode.gradient_norm <= 1e-4
+    assert "NLME-CONDITIONAL-OPTIMIZER-001" in mode.warning_codes
+
+
+def test_conditional_mode_rejects_unverified_optimizer_failure(monkeypatch) -> None:
+    objective = _quadratic_conditional_objective()
+
+    def report_nonstationary_failure(*args, **kwargs):
+        return SimpleNamespace(
+            x=np.array([1.0]),
+            success=False,
+            message="Desired error not necessarily achieved due to precision loss.",
+            nit=0,
+            nfev=1,
+        )
+
+    monkeypatch.setattr(estimation_module, "minimize", report_nonstationary_failure)
+    mode = find_conditional_mode(objective, tolerance=1e-2)
+    assert not mode.success
+    assert "NLME-CONDITIONAL-OPTIMIZER-001" in mode.warning_codes
+    assert "NLME-CONDITIONAL-GRADIENT-001" in mode.warning_codes
+
+    with pytest.raises(ConditionalModeError, match="conditional mode failed"):
+        find_conditional_mode(objective, tolerance=1e-2, require_success=True)
+
+
+def test_conditional_mode_require_success_checks_raw_success_result(monkeypatch) -> None:
+    objective = _quadratic_conditional_objective()
+
+    def report_nonstationary_success(*args, **kwargs):
+        return SimpleNamespace(
+            x=np.array([1.0]),
+            success=True,
+            message="Optimization terminated successfully.",
+            nit=1,
+            nfev=1,
+        )
+
+    monkeypatch.setattr(estimation_module, "minimize", report_nonstationary_success)
+    with pytest.raises(ConditionalModeError, match="NLME-CONDITIONAL-GRADIENT-001"):
+        find_conditional_mode(objective, require_success=True)
 
 
 def test_conditional_objective_supports_bql_and_missing_values() -> None:

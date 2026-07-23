@@ -55,6 +55,12 @@ def is_missing(value: Any) -> bool:
     return bool(result) if isinstance(result, (bool, np.bool_)) else False
 
 
+def _boolean_array(values: Any) -> NDArray[np.bool_]:
+    """Normalize NumPy predicate output across supported typing-stub versions."""
+
+    return np.asarray(values, dtype=np.bool_)
+
+
 def missing_mask(values: ArrayLike) -> NDArray[np.bool_]:
     """Return a one-dimensional missing-value mask."""
 
@@ -62,11 +68,11 @@ def missing_mask(values: ArrayLike) -> NDArray[np.bool_]:
     if array.ndim != 1:
         raise DataError("Data columns must be one-dimensional.", code="DATA-COLUMN-SHAPE-001")
     if np.issubdtype(array.dtype, np.floating):
-        return np.isnan(array)
+        return _boolean_array(np.isnan(array))
     if np.issubdtype(array.dtype, np.complexfloating):
-        return np.isnan(array.real) | np.isnan(array.imag)
+        return _boolean_array(np.isnan(array.real) | np.isnan(array.imag))
     if np.issubdtype(array.dtype, np.datetime64) or np.issubdtype(array.dtype, np.timedelta64):
-        return np.isnat(array)
+        return _boolean_array(np.isnat(array))
     return np.fromiter((is_missing(item) for item in array), dtype=bool, count=array.size)
 
 

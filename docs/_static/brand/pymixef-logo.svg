@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 246 56" role="img" aria-labelledby="title desc">
+  <title id="title">PyMixEF</title>
+  <desc id="desc">PyMixEF mixed-effects statistics and pharmacometrics.</desc>
+  <g fill="none" stroke="#252522" stroke-linecap="round">
+    <path d="M8 14C18 14 21 21 35 21M8 28H35M8 42C18 42 21 35 35 35" stroke-width="4"/>
+    <path d="M36 11V45" stroke-width="4"/>
+  </g>
+  <circle cx="7" cy="14" r="2.75" fill="#252522"/>
+  <circle cx="7" cy="28" r="2.75" fill="#252522"/>
+  <circle cx="7" cy="42" r="2.75" fill="#252522"/>
+  <text x="52" y="38" fill="#252522" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="31" font-weight="680" letter-spacing="-1.25">PyMixEF</text>
+</svg>

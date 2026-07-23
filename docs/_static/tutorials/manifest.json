@@ -1,0 +1,317 @@
+{
+  "figure_count": 31,
+  "figures": [
+    {
+      "alt": "PyMixEF tutorial figure: Adjusted catalyst performance with 95% Wald intervals.",
+      "cell": 20,
+      "filename": "01_catalyst_screening_lmm-figure-1.png",
+      "height": 451,
+      "notebook": "01_catalyst_screening_lmm.ipynb",
+      "output": 0,
+      "sha256": "eb38a3b9005014152ac119b3a770b342aaad6c8f36909267af4fe89420424f46",
+      "width": 781
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Observed yields and population fitted trends.",
+      "cell": 23,
+      "filename": "01_catalyst_screening_lmm-figure-2.png",
+      "height": 495,
+      "notebook": "01_catalyst_screening_lmm.ipynb",
+      "output": 0,
+      "sha256": "f6e9f9792aae30cbf0bfd96a10029a15920582e900950032f51c21ca0f38d772",
+      "width": 803
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Residual check for the catalyst-screening LMM.",
+      "cell": 28,
+      "filename": "01_catalyst_screening_lmm-figure-3.png",
+      "height": 451,
+      "notebook": "01_catalyst_screening_lmm.ipynb",
+      "output": 0,
+      "sha256": "9e818630401004e0e1632c319dd455bd82fce3358abf05173665d3a79e6bd68c",
+      "width": 781
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Promoter shifts the fitted success-probability curve.",
+      "cell": 20,
+      "filename": "02_binary_catalyst_success_glmm-figure-1.png",
+      "height": 462,
+      "notebook": "02_binary_catalyst_success_glmm.ipynb",
+      "output": 0,
+      "sha256": "cdbe620b577b4b6db2ba7bd811c691a1c06c35cf2f9c52a0a00191915ae564a2",
+      "width": 781
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Shrunken conditional modes by catalyst lot.",
+      "cell": 25,
+      "filename": "02_binary_catalyst_success_glmm-figure-2.png",
+      "height": 539,
+      "notebook": "02_binary_catalyst_success_glmm.ipynb",
+      "output": 0,
+      "sha256": "9b818acf88843e4f62a5232dfb16e2b3cc80263ba786d386e8a48cd4e737dd77",
+      "width": 781
+    },
+    {
+      "alt": "PyMixEF tutorial figure: In-sample conditional calibration.",
+      "cell": 28,
+      "filename": "02_binary_catalyst_success_glmm-figure-3.png",
+      "height": 539,
+      "notebook": "02_binary_catalyst_success_glmm.ipynb",
+      "output": 0,
+      "sha256": "9d87a7a5d26f1125667a43cea4cc872ddd036b368d94d863373c293ead404805",
+      "width": 583
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Stabilized formulation retains activity across cycles.",
+      "cell": 18,
+      "filename": "03_catalyst_deactivation_mmrm-figure-1.png",
+      "height": 484,
+      "notebook": "03_catalyst_deactivation_mmrm.ipynb",
+      "output": 0,
+      "sha256": "6a29a1e36a95324ad9ae241caebf0951bf90ece24fead87afecf51d7a765ad98",
+      "width": 781
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Fitted AR(1) correlation across cycles.",
+      "cell": 23,
+      "filename": "03_catalyst_deactivation_mmrm-figure-2.png",
+      "height": 542,
+      "notebook": "03_catalyst_deactivation_mmrm.ipynb",
+      "output": 0,
+      "sha256": "6df547ab0dc35acfb98c2e9bce4eec6b24c2b3f2692a7c4aafd20387896feb34",
+      "width": 618
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Residual distribution across reaction cycles.",
+      "cell": 28,
+      "filename": "03_catalyst_deactivation_mmrm-figure-3.png",
+      "height": 462,
+      "notebook": "03_catalyst_deactivation_mmrm.ipynb",
+      "output": 0,
+      "sha256": "8c001670d5291604f4276fcd21b1354de5786e88f0ad2a0f902d5926f22a5c8b",
+      "width": 781
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Observed biomarker trajectories by treatment.",
+      "cell": 6,
+      "filename": "04_multicenter_biomarker_lmm-figure-1.png",
+      "height": 451,
+      "notebook": "04_multicenter_biomarker_lmm.ipynb",
+      "output": 0,
+      "sha256": "41d7bc5c6e72f86155ba8d8e7f38dbd73b2b0c1a3f52105c38ba876e834bb6e1",
+      "width": 731
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Adjusted fixed-effect estimates with 95% Wald intervals.",
+      "cell": 14,
+      "filename": "04_multicenter_biomarker_lmm-figure-2.png",
+      "height": 431,
+      "notebook": "04_multicenter_biomarker_lmm.ipynb",
+      "output": 0,
+      "sha256": "2f2787cdc2772dbb4a947afe3cc17e9819c2ad65b1eb89dce1d00c7a4273b413",
+      "width": 731
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Conditional residuals versus fitted biomarker.",
+      "cell": 20,
+      "filename": "04_multicenter_biomarker_lmm-figure-3.png",
+      "height": 451,
+      "notebook": "04_multicenter_biomarker_lmm.ipynb",
+      "output": 0,
+      "sha256": "954dd7d759e2ae9c50427f4da46b1d7342d6e6bdfb2260aba841dce32f975548",
+      "width": 731
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Observed change from baseline by treatment.",
+      "cell": 6,
+      "filename": "05_clinical_trial_mmrm-figure-1.png",
+      "height": 451,
+      "notebook": "05_clinical_trial_mmrm.ipynb",
+      "output": 0,
+      "sha256": "8d51d6090ac716007603e7dce82dea403527ec98374fe3ff1c848a8ecc583ec1",
+      "width": 731
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Estimated within-subject visit correlation.",
+      "cell": 15,
+      "filename": "05_clinical_trial_mmrm-figure-2.png",
+      "height": 511,
+      "notebook": "05_clinical_trial_mmrm.ipynb",
+      "output": 0,
+      "sha256": "df4ef0c37b355411e25c03a0c9a24cdabaa907af8f9fb5c732e638d737902c85",
+      "width": 614
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Adjusted treatment contrast by visit.",
+      "cell": 20,
+      "filename": "05_clinical_trial_mmrm-figure-3.png",
+      "height": 451,
+      "notebook": "05_clinical_trial_mmrm.ipynb",
+      "output": 0,
+      "sha256": "50375ecfaee5b52feb5dbba3f5b9a4619f199951e120adb14bd39dd8a37ce5fe",
+      "width": 731
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Conditional response probability by treatment.",
+      "cell": 11,
+      "filename": "06_binary_response_glmm-figure-1.png",
+      "height": 451,
+      "notebook": "06_binary_response_glmm.ipynb",
+      "output": 0,
+      "sha256": "dcf0b17db839dff78ae05fe63f564ec15e5965c12b2081d0e72d34cdd8cef035",
+      "width": 731
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Observed versus fitted response by probability bin.",
+      "cell": 16,
+      "filename": "06_binary_response_glmm-figure-2.png",
+      "height": 511,
+      "notebook": "06_binary_response_glmm.ipynb",
+      "output": 0,
+      "sha256": "2ee5d7e1a569e8f38a3189875b675386dfcce243177e5c76a3984d61d489f214",
+      "width": 509
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Clinic conditional random intercepts.",
+      "cell": 19,
+      "filename": "06_binary_response_glmm-figure-3.png",
+      "height": 531,
+      "notebook": "06_binary_response_glmm.ipynb",
+      "output": 0,
+      "sha256": "1fc445c8cc77e9b5a42f40e9ab168fd5cddb95b961735b0ccaffa9021676a1d0",
+      "width": 731
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Canonical event timeline by subject.",
+      "cell": 7,
+      "filename": "07_pharmacometrics_event_semantics-figure-1.png",
+      "height": 431,
+      "notebook": "07_pharmacometrics_event_semantics.ipynb",
+      "output": 0,
+      "sha256": "fefebd0a59d1446e369e6bd497ce2b5b318d89fd6d92d2962018a41cb04c6e6c",
+      "width": 771
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Canonical source rows and deterministic expansions.",
+      "cell": 13,
+      "filename": "07_pharmacometrics_event_semantics-figure-2.png",
+      "height": 531,
+      "notebook": "07_pharmacometrics_event_semantics.ipynb",
+      "output": 0,
+      "sha256": "12d895a14e2ed9b4f9548ebc368440fa3c54c5591483c271cefd9fdbc3697d7d",
+      "width": 771
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Canonicalization and expansion audit actions.",
+      "cell": 18,
+      "filename": "07_pharmacometrics_event_semantics-figure-3.png",
+      "height": 441,
+      "notebook": "07_pharmacometrics_event_semantics.ipynb",
+      "output": 0,
+      "sha256": "b0adea6363ad2605ddb7bef4146c5bcd4cf3748d46929d6d148a5dcef610bc96",
+      "width": 731
+    },
+    {
+      "alt": "PyMixEF tutorial figure: One-compartment IV-bolus agreement.",
+      "cell": 7,
+      "filename": "08_closed_form_pk_and_ode-figure-1.png",
+      "height": 611,
+      "notebook": "08_closed_form_pk_and_ode.ipynb",
+      "output": 0,
+      "sha256": "f312daaa2bde39b159662c6179612f6763b762706bf88cf63fba5f53e7f05dd4",
+      "width": 771
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Central-amount sensitivity to clearance.",
+      "cell": 12,
+      "filename": "08_closed_form_pk_and_ode-figure-2.png",
+      "height": 451,
+      "notebook": "08_closed_form_pk_and_ode.ipynb",
+      "output": 0,
+      "sha256": "93dc163a2caaad2c00fdc16a910fef870bf2b953ad5a62fcda21f0c4ab8badd7",
+      "width": 751
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Route-dependent concentration profiles.",
+      "cell": 16,
+      "filename": "08_closed_form_pk_and_ode-figure-3.png",
+      "height": 471,
+      "notebook": "08_closed_form_pk_and_ode.ipynb",
+      "output": 0,
+      "sha256": "c0e4f38066dba4a461759e1a07fd5f48c2f6d08e726640f1b2553cbedd8f7bc4",
+      "width": 751
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Combined observation-error variance.",
+      "cell": 20,
+      "filename": "08_closed_form_pk_and_ode-figure-4.png",
+      "height": 461,
+      "notebook": "08_closed_form_pk_and_ode.ipynb",
+      "output": 0,
+      "sha256": "1fe93f086a58d7cc8d8800fb469cc8980b783c752238dbababafae736b04a20b",
+      "width": 751
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Compiled one-compartment model dependency graph.",
+      "cell": 11,
+      "filename": "09_pharmacometrics_dsl_and_model_ir-figure-1.png",
+      "height": 531,
+      "notebook": "09_pharmacometrics_dsl_and_model_ir.ipynb",
+      "output": 0,
+      "sha256": "a59062d97355af31be402f5f2415de771b9b7cc75042ae3170ea738a79360992",
+      "width": 931
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Versioned ModelIR component inventory.",
+      "cell": 13,
+      "filename": "09_pharmacometrics_dsl_and_model_ir-figure-2.png",
+      "height": 491,
+      "notebook": "09_pharmacometrics_dsl_and_model_ir.ipynb",
+      "output": 0,
+      "sha256": "6e7d28e83be10162c4c1f03157e80cbd3f3421939b498883e1ee659fc12612aa",
+      "width": 791
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Structural dependency incidence.",
+      "cell": 15,
+      "filename": "09_pharmacometrics_dsl_and_model_ir-figure-3.png",
+      "height": 442,
+      "notebook": "09_pharmacometrics_dsl_and_model_ir.ipynb",
+      "output": 0,
+      "sha256": "d3ff43de46ae49e2e5cc009aafaad927b254e30507fc0ee679e73fd4d4d35e2a",
+      "width": 871
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Residuals versus fitted values; Residual distribution.",
+      "cell": 7,
+      "filename": "10_diagnostics_simulation_validation_interop_archives-figure-1.png",
+      "height": 431,
+      "notebook": "10_diagnostics_simulation_validation_interop_archives.ipynb",
+      "output": 0,
+      "sha256": "93307bd8f00e62a14dc95652130f05a08d207835aacf458daa4d49eec5f3b93e",
+      "width": 951
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Visual predictive check by ordered-index bin.",
+      "cell": 11,
+      "filename": "10_diagnostics_simulation_validation_interop_archives-figure-2.png",
+      "height": 511,
+      "notebook": "10_diagnostics_simulation_validation_interop_archives.ipynb",
+      "output": 0,
+      "sha256": "c5f6992057b46b8222c0921ce41916d5cce4043d6a1683d423563bc9ad228a22",
+      "width": 831
+    },
+    {
+      "alt": "PyMixEF tutorial figure: Seeded predictive distribution of the sample mean.",
+      "cell": 13,
+      "filename": "10_diagnostics_simulation_validation_interop_archives-figure-3.png",
+      "height": 461,
+      "notebook": "10_diagnostics_simulation_validation_interop_archives.ipynb",
+      "output": 0,
+      "sha256": "e822df6adc886df6438fe3d807d0f81d6a36e72d90486c0e2eec37ed2eac41d1",
+      "width": 771
+    }
+  ],
+  "schema_version": 1,
+  "source": "executed notebook image/png outputs"
+}

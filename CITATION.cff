@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use PyMixEF, cite the software release and the method references relevant to your estimator."
+title: "PyMixEF"
+type: software
+version: 0.1.0
+date-released: 2026-07-23
+license: Apache-2.0
+authors:
+  - name: "PyMixEF contributors"

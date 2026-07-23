@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">PyMixEF mark</title>
+  <desc id="desc">Three group trajectories measured against one shared population axis.</desc>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#252522"/>
+  <path d="M16 18C27 18 31 26 47 26M16 32H47M16 46C27 46 31 38 47 38" fill="none" stroke="#F3F0E8" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M48 15V49" fill="none" stroke="#C56C43" stroke-width="4.5" stroke-linecap="round"/>
+  <circle cx="15" cy="18" r="3" fill="#F3F0E8"/>
+  <circle cx="15" cy="32" r="3" fill="#F3F0E8"/>
+  <circle cx="15" cy="46" r="3" fill="#F3F0E8"/>
+</svg>

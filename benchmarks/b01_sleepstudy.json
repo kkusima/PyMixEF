@@ -1,0 +1,18 @@
+{
+  "id": "B01",
+  "name": "sleepstudy LMM",
+  "formula": "Reaction ~ Days + (1 + Days | Subject)",
+  "methods": ["ml", "reml"],
+  "reference": {
+    "software": "lme4",
+    "source": "https://lme4.github.io/lme4/articles/lmer.html",
+    "parameterization_note": "Reference values must be regenerated and version-pinned before reference-validation."
+  },
+  "acceptance": {
+    "fixed_effects_relative": 1e-6,
+    "variance_components_relative": 1e-6,
+    "objective_relative": 1e-6
+  },
+  "maturity": "benchmark-definition-only"
+}
+

@@ -1,0 +1,19 @@
+Package: pymixef
+Title: R Interface to PyMixEF
+Version: 0.1.0
+Authors@R: person("PyMixEF", "Contributors", role = c("aut", "cre"),
+                  email = "maintainers@example.invalid")
+Description: Thin reticulate interface to the PyMixEF Python engine. Model
+    semantics and results remain in the versioned shared intermediate
+    representation. The interface translates a deliberately restricted subset
+    of R mixed-effects formulas and refuses unsupported constructs rather than
+    evaluating arbitrary R expressions.
+License: Apache License (>= 2)
+Encoding: UTF-8
+Language: en-US
+Imports: reticulate
+Suggests:
+    testthat (>= 3.1.0)
+Config/testthat/edition: 3
+NeedsCompilation: no
+RoxygenNote: 7.3.2

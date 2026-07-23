@@ -1,0 +1,1111 @@
+/*
+ * PyMixEF documentation theme
+ *
+ * A quiet, documentation-first visual system built from warm neutrals and one
+ * oxide accent.  The type stack is intentionally native so the site feels at
+ * home on every platform without loading third-party fonts.
+ */
+
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* PyData Sphinx Theme tokens */
+  --pst-color-primary: #9b452a;
+  --pst-color-primary-text: #ffffff;
+  --pst-color-primary-highlight: #f3e7e0;
+  --pst-color-primary-highlight-text: #612817;
+  --pst-color-secondary: #6f5548;
+  --pst-color-secondary-text: #ffffff;
+  --pst-color-secondary-highlight: #eee8e3;
+  --pst-color-secondary-highlight-text: #3e3029;
+  --pst-color-accent: #b85f3b;
+  --pst-color-accent-text: #ffffff;
+  --pst-color-accent-bg: #f8eee9;
+  --pst-color-info: #9b452a;
+  --pst-color-info-bg: #f8eee9;
+  --pst-color-success: #69705b;
+  --pst-color-success-bg: #eef0e9;
+  --pst-color-warning: #a65c24;
+  --pst-color-warning-bg: #f8eee3;
+  --pst-color-danger: #8c3f32;
+  --pst-color-danger-bg: #f7e9e5;
+  --pst-color-background: #fbfaf7;
+  --pst-color-on-background: #ffffff;
+  --pst-color-surface: #f2f0ea;
+  --pst-color-on-surface: #262623;
+  --pst-color-text-base: #282825;
+  --pst-color-text-muted: #6a6963;
+  --pst-color-heading: #1f1f1d;
+  --pst-color-border: #dedbd2;
+  --pst-color-border-muted: #ebe8e1;
+  --pst-color-shadow: rgba(30, 29, 25, 0.09);
+  --pst-color-inline-code: #7f3925;
+  --pst-color-inline-code-links: #7f3925;
+  --pst-color-link: #8f3c24;
+  --pst-color-link-hover: #5f2818;
+  --pst-color-link-higher-contrast: #702f1d;
+  --pst-color-target: #f2dfd4;
+  --pst-color-table-outer-border: #dedbd2;
+  --pst-color-table-inner-border: #e8e5de;
+  --pst-color-table-heading-bg: #eeece6;
+  --pst-color-table-row-zebra-high-bg: #f7f5f0;
+  --pst-color-table-row-zebra-low-bg: #ffffff;
+  --pst-color-table-row-hover-bg: #f4eee9;
+
+  /* Project tokens */
+  --pymixef-ink: #222220;
+  --pymixef-muted: #6a6963;
+  --pymixef-accent: #a94d2d;
+  --pymixef-accent-strong: #81371f;
+  --pymixef-canvas: #fbfaf7;
+  --pymixef-surface: #f3f1eb;
+  --pymixef-surface-raised: #ffffff;
+  --pymixef-sidebar: #f7f5ef;
+  --pymixef-border: #dfdcd3;
+  --pymixef-border-soft: #ece9e2;
+  --pymixef-highlight: #f2d875;
+  --pymixef-highlight-active: #963f25;
+  --pymixef-code-comment: #77736b;
+  --pymixef-code-keyword: #8b3f29;
+  --pymixef-code-string: #5e6748;
+  --pymixef-code-number: #8a5b29;
+  --pymixef-code-symbol: #6f5548;
+  --pymixef-code-name: #29302b;
+  --pymixef-code-danger: #8c3f32;
+  --pymixef-shadow-sm: 0 1px 2px rgba(32, 31, 27, 0.04);
+  --pymixef-shadow-md: 0 12px 34px rgba(32, 31, 27, 0.08);
+  --pymixef-radius-sm: 0.45rem;
+  --pymixef-radius: 0.75rem;
+  --pymixef-radius-lg: 1rem;
+  --pymixef-font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji";
+  --pymixef-font-mono:
+    "SFMono-Regular", "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --pst-color-primary: #e09a76;
+  --pst-color-primary-text: #1c1714;
+  --pst-color-primary-highlight: #492c21;
+  --pst-color-primary-highlight-text: #f5ded2;
+  --pst-color-secondary: #c9aa98;
+  --pst-color-secondary-text: #201b18;
+  --pst-color-secondary-highlight: #403630;
+  --pst-color-secondary-highlight-text: #f1e5de;
+  --pst-color-accent: #d78059;
+  --pst-color-accent-text: #1e1713;
+  --pst-color-accent-bg: #41291f;
+  --pst-color-info: #dd8e68;
+  --pst-color-info-bg: #41291f;
+  --pst-color-success: #a9ad98;
+  --pst-color-success-bg: #303229;
+  --pst-color-warning: #d19a62;
+  --pst-color-warning-bg: #3d3022;
+  --pst-color-danger: #d88b7e;
+  --pst-color-danger-bg: #422824;
+  --pst-color-background: #1b1b19;
+  --pst-color-on-background: #222220;
+  --pst-color-surface: #292925;
+  --pst-color-on-surface: #eeece5;
+  --pst-color-text-base: #e9e6de;
+  --pst-color-text-muted: #aaa79f;
+  --pst-color-heading: #f5f2eb;
+  --pst-color-border: #3c3b36;
+  --pst-color-border-muted: #32312d;
+  --pst-color-shadow: rgba(0, 0, 0, 0.32);
+  --pst-color-inline-code: #efad8d;
+  --pst-color-inline-code-links: #efad8d;
+  --pst-color-link: #e6a080;
+  --pst-color-link-hover: #f3c4ad;
+  --pst-color-link-higher-contrast: #efb093;
+  --pst-color-target: #533124;
+  --pst-color-table-outer-border: #403f39;
+  --pst-color-table-inner-border: #373630;
+  --pst-color-table-heading-bg: #2b2a26;
+  --pst-color-table-row-zebra-high-bg: #252522;
+  --pst-color-table-row-zebra-low-bg: #20201e;
+  --pst-color-table-row-hover-bg: #332a25;
+
+  --pymixef-ink: #f1eee7;
+  --pymixef-muted: #aaa79f;
+  --pymixef-accent: #dd8e68;
+  --pymixef-accent-strong: #efaf91;
+  --pymixef-canvas: #1b1b19;
+  --pymixef-surface: #282824;
+  --pymixef-surface-raised: #222220;
+  --pymixef-sidebar: #1e1e1c;
+  --pymixef-border: #3d3c37;
+  --pymixef-border-soft: #32312d;
+  --pymixef-highlight: #d3ae4f;
+  --pymixef-highlight-active: #c96b45;
+  --pymixef-code-comment: #99958c;
+  --pymixef-code-keyword: #e1a081;
+  --pymixef-code-string: #b5bd91;
+  --pymixef-code-number: #d8a666;
+  --pymixef-code-symbol: #c9aa98;
+  --pymixef-code-name: #e8e4dc;
+  --pymixef-code-danger: #dd9182;
+  --pymixef-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.18);
+  --pymixef-shadow-md: 0 14px 38px rgba(0, 0, 0, 0.26);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-canvas);
+  font-family: var(--pymixef-font-sans);
+  font-size: 1rem;
+  font-feature-settings: "kern", "liga", "calt";
+  line-height: 1.66;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  color: var(--pymixef-ink);
+  background: color-mix(in srgb, var(--pymixef-accent) 24%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--pymixef-accent);
+  outline-offset: 3px;
+}
+
+/* Header and global navigation */
+
+.bd-header {
+  min-height: 4rem;
+  background: color-mix(in srgb, var(--pymixef-canvas) 92%, transparent);
+  border-bottom: 1px solid var(--pymixef-border-soft);
+  box-shadow: none;
+  backdrop-filter: saturate(120%) blur(18px);
+  -webkit-backdrop-filter: saturate(120%) blur(18px);
+}
+
+.bd-header__inner {
+  min-height: 4rem;
+}
+
+.navbar-brand {
+  padding-block: 0.35rem;
+}
+
+.navbar-brand img {
+  width: auto;
+  height: 2rem;
+  max-width: 10.75rem;
+}
+
+html[data-theme="dark"] .navbar-brand img {
+  filter: brightness(0) invert(0.92);
+}
+
+.bd-navbar-elements .nav-link,
+.bd-navbar-elements .dropdown-toggle {
+  margin-inline: 0.08rem;
+  padding: 0.42rem 0.58rem !important;
+  color: var(--pymixef-muted);
+  border-radius: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 560;
+  letter-spacing: -0.005em;
+  transition: color 130ms ease, background-color 130ms ease;
+}
+
+.bd-navbar-elements .nav-link:hover,
+.bd-navbar-elements .dropdown-toggle:hover {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface);
+}
+
+.bd-navbar-elements .nav-item.current > .nav-link,
+.bd-navbar-elements .nav-item.active > .nav-link {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface);
+  font-weight: 650;
+}
+
+.pst-navbar-icon {
+  color: var(--pymixef-muted);
+  border-radius: var(--pymixef-radius-sm);
+}
+
+.pst-navbar-icon:hover {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface);
+}
+
+.dropdown-menu {
+  padding: 0.45rem;
+  background: var(--pymixef-surface-raised);
+  border: 1px solid var(--pymixef-border);
+  border-radius: 0.7rem;
+  box-shadow: var(--pymixef-shadow-md);
+}
+
+.dropdown-item {
+  border-radius: 0.4rem;
+}
+
+/* Sidebars and local navigation */
+
+.bd-sidebar-primary {
+  background: var(--pymixef-sidebar);
+  border-right: 1px solid var(--pymixef-border-soft);
+}
+
+.bd-sidebar-secondary {
+  border-left: 1px solid var(--pymixef-border-soft);
+}
+
+.bd-links__title,
+.tocsection {
+  color: var(--pymixef-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.bd-docs-nav .nav-link,
+.bd-sidebar-secondary .nav-link {
+  margin-block: 0.08rem;
+  padding: 0.34rem 0.6rem;
+  color: var(--pymixef-muted);
+  border-radius: 0.4rem;
+  font-size: 0.875rem;
+  line-height: 1.42;
+  transition: color 120ms ease, background-color 120ms ease;
+}
+
+.bd-docs-nav .nav-link:hover,
+.bd-sidebar-secondary .nav-link:hover {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface);
+}
+
+.bd-docs-nav .current > .reference,
+.bd-docs-nav .active > .reference,
+.bd-sidebar-secondary .active > .nav-link {
+  color: var(--pymixef-accent-strong);
+  background: color-mix(in srgb, var(--pymixef-accent) 9%, transparent);
+  font-weight: 650;
+}
+
+.bd-sidebar-secondary .active > .nav-link {
+  box-shadow: inset 2px 0 0 var(--pymixef-accent);
+}
+
+.bd-sidebar .nav ul {
+  margin-left: 0.45rem;
+  border-left-color: var(--pymixef-border);
+}
+
+#pst-collapse-sidebar-button {
+  color: var(--pymixef-muted);
+}
+
+/* Main reading surface and typography */
+
+.bd-main .bd-content .bd-article-container {
+  max-width: 61rem;
+}
+
+.bd-article {
+  letter-spacing: -0.004em;
+}
+
+.bd-article > :first-child {
+  margin-top: 0;
+}
+
+.bd-article h1,
+.bd-article h2,
+.bd-article h3,
+.bd-article h4 {
+  color: var(--pymixef-ink);
+  font-family: var(--pymixef-font-sans);
+  font-weight: 690;
+  letter-spacing: -0.035em;
+  scroll-margin-top: 5.5rem;
+}
+
+.bd-article h1 {
+  max-width: 23ch;
+  margin-bottom: 1rem;
+  font-size: clamp(2.25rem, 4.7vw, 3.55rem);
+  line-height: 1.04;
+}
+
+.bd-article h2 {
+  margin-top: 3.25rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--pymixef-border-soft);
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  line-height: 1.18;
+}
+
+.bd-article h3 {
+  margin-top: 2.25rem;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.bd-article h4 {
+  margin-top: 1.8rem;
+  font-size: 1.05rem;
+  letter-spacing: -0.015em;
+}
+
+.bd-article p,
+.bd-article li {
+  max-width: 78ch;
+}
+
+.bd-article p {
+  margin-bottom: 1.05rem;
+}
+
+.bd-article a {
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--pymixef-accent) 48%,
+    transparent
+  );
+  text-decoration-thickness: 0.065em;
+  text-underline-offset: 0.19em;
+}
+
+.bd-article a:hover {
+  text-decoration-color: currentcolor;
+}
+
+.headerlink {
+  color: var(--pymixef-muted) !important;
+  font-size: 0.72em;
+}
+
+.rubric {
+  color: var(--pymixef-muted);
+  font-size: 0.77rem;
+  font-weight: 720;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+hr {
+  margin-block: 2.5rem;
+  border-color: var(--pymixef-border-soft);
+  opacity: 1;
+}
+
+/* Landing page */
+
+.pymixef-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 2.25rem;
+  padding: clamp(2.4rem, 5vw, 4.25rem) clamp(0rem, 2vw, 1rem);
+  color: var(--pymixef-ink);
+  background: transparent;
+  border-bottom: 1px solid var(--pymixef-border);
+}
+
+.pymixef-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pymixef-hero h1 {
+  max-width: 20ch;
+  margin: 0 0 1.05rem;
+  color: var(--pymixef-ink);
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  font-weight: 680;
+  line-height: 1.02;
+  letter-spacing: -0.052em;
+}
+
+.pymixef-hero p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--pymixef-muted);
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  line-height: 1.62;
+}
+
+.pymixef-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem !important;
+  color: var(--pymixef-accent) !important;
+  font-size: 0.72rem !important;
+  font-weight: 720;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pymixef-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.65rem;
+}
+
+.pymixef-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.7rem;
+  padding: 0.64rem 0.95rem;
+  color: var(--pst-color-primary-text);
+  background: var(--pymixef-accent-strong);
+  border: 1px solid var(--pymixef-accent-strong);
+  border-radius: 0.52rem;
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: background-color 130ms ease, border-color 130ms ease;
+}
+
+.pymixef-actions a:last-child {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface-raised);
+  border-color: var(--pymixef-border);
+}
+
+.pymixef-actions a:hover {
+  color: var(--pst-color-primary-text);
+  background: var(--pymixef-accent);
+  border-color: var(--pymixef-accent);
+}
+
+.pymixef-actions a:last-child:hover {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface);
+  border-color: var(--pymixef-muted);
+}
+
+/* Cards and disclosure components */
+
+.sd-card {
+  height: 100%;
+  background: var(--pymixef-surface-raised) !important;
+  border-color: var(--pymixef-border) !important;
+  border-radius: var(--pymixef-radius) !important;
+  box-shadow: var(--pymixef-shadow-sm);
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    border-color 140ms ease;
+}
+
+.sd-card:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--pymixef-accent) 48%,
+    var(--pymixef-border)
+  ) !important;
+  box-shadow: 0 7px 22px rgba(32, 31, 27, 0.07);
+  transform: translateY(-1px);
+}
+
+.sd-card-title {
+  color: var(--pymixef-ink);
+  font-weight: 670;
+  letter-spacing: -0.015em;
+}
+
+.sd-card-text {
+  color: var(--pymixef-muted);
+  line-height: 1.58;
+}
+
+.pymixef-domain-card .sd-card-header {
+  color: var(--pymixef-accent-strong);
+  background: transparent;
+  border-bottom: 0;
+  font-size: 0.7rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+details.sd-dropdown {
+  overflow: clip;
+  background: var(--pymixef-surface-raised);
+  border: 1px solid var(--pymixef-border) !important;
+  border-radius: var(--pymixef-radius) !important;
+  box-shadow: none !important;
+}
+
+details.sd-dropdown summary.sd-summary-title {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface) !important;
+  font-weight: 630;
+}
+
+/* Equations, API signatures, and code */
+
+div.math,
+.math-wrapper,
+mjx-container[display="true"] {
+  max-width: 100%;
+  margin: 1.5rem 0 !important;
+  padding: 1.05rem 1.2rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  color: var(--pymixef-ink);
+  background: transparent;
+  border-top: 1px solid var(--pymixef-border-soft);
+  border-bottom: 1px solid var(--pymixef-border-soft);
+  border-left: 3px solid var(--pymixef-accent);
+  border-radius: 0 var(--pymixef-radius-sm) var(--pymixef-radius-sm) 0;
+  scrollbar-color: var(--pymixef-border) transparent;
+  scrollbar-width: thin;
+}
+
+mjx-container[display="true"] {
+  text-align: center;
+}
+
+/* MathJax inserts its own display container into Sphinx's math wrapper. */
+div.math mjx-container[display="true"],
+.math-wrapper mjx-container[display="true"] {
+  margin: 0 !important;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.math .eqno {
+  color: var(--pymixef-muted);
+}
+
+div.highlight,
+.literal-block-wrapper,
+.cell_input {
+  overflow: hidden;
+  background: var(--pymixef-surface-raised);
+  border: 1px solid var(--pymixef-border) !important;
+  border-radius: 0.65rem !important;
+  box-shadow: none;
+}
+
+.highlight pre,
+pre {
+  font-family: var(--pymixef-font-mono);
+  font-size: 0.865rem;
+  line-height: 1.62;
+}
+
+/* A restrained, earth-toned syntax palette with no blue or purple accents. */
+.highlight .c,
+.highlight .ch,
+.highlight .cm,
+.highlight .cp,
+.highlight .cpf,
+.highlight .c1,
+.highlight .cs {
+  color: var(--pymixef-code-comment) !important;
+  font-style: italic;
+}
+
+.highlight .k,
+.highlight .kc,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt,
+.highlight .ow {
+  color: var(--pymixef-code-keyword) !important;
+  font-weight: 620;
+}
+
+.highlight .s,
+.highlight .sa,
+.highlight .sb,
+.highlight .sc,
+.highlight .dl,
+.highlight .sd,
+.highlight .s2,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sx,
+.highlight .sr,
+.highlight .s1,
+.highlight .ss {
+  color: var(--pymixef-code-string) !important;
+}
+
+.highlight .m,
+.highlight .mb,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il {
+  color: var(--pymixef-code-number) !important;
+}
+
+.highlight .o,
+.highlight .p,
+.highlight .na,
+.highlight .nb,
+.highlight .bp {
+  color: var(--pymixef-code-symbol) !important;
+}
+
+.highlight .n,
+.highlight .nc,
+.highlight .nd,
+.highlight .ni,
+.highlight .nl,
+.highlight .nn,
+.highlight .nt,
+.highlight .nv,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi,
+.highlight .vm {
+  color: var(--pymixef-code-name) !important;
+}
+
+.highlight .ne,
+.highlight .err,
+.highlight .gr,
+.highlight .gt {
+  color: var(--pymixef-code-danger) !important;
+}
+
+.highlight .nf,
+.highlight .fm {
+  color: var(--pymixef-accent-strong) !important;
+  font-weight: 620;
+}
+
+code,
+kbd,
+samp {
+  font-family: var(--pymixef-font-mono);
+}
+
+code.literal {
+  padding: 0.1em 0.28em;
+  color: var(--pst-color-inline-code);
+  background: color-mix(
+    in srgb,
+    var(--pymixef-accent) 7%,
+    var(--pymixef-surface)
+  );
+  border: 1px solid color-mix(
+    in srgb,
+    var(--pymixef-accent) 18%,
+    var(--pymixef-border)
+  );
+  border-radius: 0.28rem;
+  font-size: 0.89em;
+}
+
+.copybtn {
+  color: var(--pymixef-muted) !important;
+  background: var(--pymixef-surface) !important;
+  border-color: var(--pymixef-border) !important;
+  border-radius: 0.35rem !important;
+}
+
+dl.py > dt.sig,
+dl.class > dt.sig,
+dl.function > dt.sig,
+dl.method > dt.sig,
+dl.attribute > dt.sig {
+  padding: 0.72rem 0.85rem;
+  overflow-x: auto;
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface);
+  border: 1px solid var(--pymixef-border);
+  border-left: 3px solid var(--pymixef-accent);
+  border-radius: 0.45rem;
+  font-family: var(--pymixef-font-mono);
+  font-size: 0.9rem;
+}
+
+.sig-name {
+  color: var(--pymixef-accent-strong);
+  font-weight: 720;
+}
+
+.sig-param,
+.sig-prename {
+  color: var(--pymixef-ink);
+}
+
+.viewcode-link {
+  color: var(--pymixef-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* API links injected into examples remain discoverable without visual noise. */
+a.sphinx-codeautolink-a,
+.sphinx-codeautolink-a {
+  color: inherit;
+  text-decoration: none;
+  box-shadow: inset 0 -1px 0 color-mix(
+    in srgb,
+    var(--pymixef-accent) 46%,
+    transparent
+  );
+  transition:
+    color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+a.sphinx-codeautolink-a:hover,
+a.sphinx-codeautolink-a:focus-visible,
+.sphinx-codeautolink-a:hover,
+.sphinx-codeautolink-a:focus-visible {
+  color: var(--pymixef-accent-strong);
+  box-shadow: inset 0 -2px 0 var(--pymixef-accent);
+}
+
+/* Tables and figures */
+
+.bd-article table {
+  width: max-content;
+  min-width: 100%;
+  margin: 1.35rem 0;
+  overflow: hidden;
+  border: 1px solid var(--pymixef-border);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0.55rem;
+  font-size: 0.91rem;
+}
+
+.bd-article table th {
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface);
+  font-size: 0.79rem;
+  font-weight: 680;
+  letter-spacing: 0.025em;
+}
+
+.bd-article table th,
+.bd-article table td {
+  padding: 0.66rem 0.78rem;
+  border-bottom: 1px solid var(--pymixef-border-soft);
+  vertical-align: top;
+}
+
+.bd-article table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.bd-article img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.55rem;
+}
+
+.bd-article figure {
+  margin: 1.8rem auto;
+  padding: 0.7rem;
+  background: var(--pymixef-surface);
+  border: 1px solid var(--pymixef-border);
+  border-radius: var(--pymixef-radius);
+}
+
+.bd-article figcaption {
+  padding: 0.72rem 0.45rem 0.15rem;
+  color: var(--pymixef-muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+/* Admonitions use hierarchy, not saturated category colors. */
+
+.admonition {
+  overflow: hidden;
+  background: var(--pymixef-surface-raised);
+  border: 1px solid var(--pymixef-border);
+  border-left: 3px solid var(--pymixef-accent);
+  border-radius: 0.55rem;
+  box-shadow: none;
+}
+
+.admonition > .admonition-title {
+  color: var(--pymixef-ink) !important;
+  background: var(--pymixef-surface) !important;
+  font-size: 0.82rem;
+  font-weight: 680;
+}
+
+.admonition > .admonition-title::after {
+  color: var(--pymixef-accent) !important;
+}
+
+.admonition.note,
+.admonition.seealso {
+  border-left-color: var(--pymixef-accent);
+}
+
+.admonition.warning,
+.admonition.caution,
+.admonition.danger,
+.admonition.error {
+  border-left-color: #a65c24;
+}
+
+.admonition.tip,
+.admonition.hint,
+.admonition.important {
+  border-left-color: #69705b;
+}
+
+/* Search */
+
+.bd-search input[type="search"],
+.search-button-field {
+  background: var(--pymixef-surface-raised);
+  border-color: var(--pymixef-border);
+  border-radius: 0.55rem;
+}
+
+.search-button-field {
+  color: var(--pymixef-muted);
+}
+
+@media (min-width: 960px) {
+  .navbar-persistent--container .search-button-field {
+    inline-size: 13.38rem;
+    justify-content: flex-start;
+  }
+}
+
+.search-dialog {
+  background: color-mix(in srgb, var(--pymixef-canvas) 95%, transparent);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.search-hit-toolbar {
+  position: sticky;
+  z-index: 4;
+  top: 4.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  margin: 0 0 1.1rem;
+  padding: 0.52rem 0.62rem 0.52rem 0.82rem;
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface-raised);
+  border: 1px solid var(--pymixef-border);
+  border-left: 3px solid var(--pymixef-accent);
+  border-radius: 0.52rem;
+  box-shadow: var(--pymixef-shadow-md);
+}
+
+.search-hit-toolbar .search-hit-label {
+  min-width: 0;
+  margin-right: auto;
+  overflow: hidden;
+  font-size: 0.88rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-hit-toolbar button {
+  min-width: 2.05rem;
+  min-height: 2.05rem;
+  padding: 0.22rem 0.5rem;
+  color: var(--pymixef-ink);
+  background: var(--pymixef-surface);
+  border: 1px solid var(--pymixef-border);
+  border-radius: 0.38rem;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.search-hit-toolbar button:hover,
+.search-hit-toolbar button:focus-visible {
+  border-color: var(--pymixef-accent);
+  outline: 2px solid color-mix(
+    in srgb,
+    var(--pymixef-accent) 28%,
+    transparent
+  );
+}
+
+mark.query-highlight,
+span.highlighted {
+  padding: 0.05em 0.13em;
+  color: #29220e;
+  background: var(--pymixef-highlight);
+  border-radius: 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+mark.query-highlight.is-active,
+span.highlighted.is-active {
+  color: #ffffff;
+  background: var(--pymixef-highlight-active);
+  outline: 3px solid color-mix(
+    in srgb,
+    var(--pymixef-highlight-active) 26%,
+    transparent
+  );
+}
+
+/* Finishing details */
+
+.pymixef-reading-progress {
+  position: fixed;
+  z-index: 1100;
+  inset: 0 auto auto 0;
+  width: 0;
+  height: 2px;
+  background: var(--pymixef-accent);
+  pointer-events: none;
+}
+
+.api-index-list code {
+  font-size: 0.89em;
+}
+
+.prev-next-area {
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--pymixef-border-soft);
+}
+
+.prev-next-area a {
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+}
+
+.prev-next-area a:hover {
+  background: var(--pymixef-surface);
+}
+
+.bd-footer-content {
+  border-top-color: var(--pymixef-border-soft);
+}
+
+@media (max-width: 1199.98px) {
+  .bd-sidebar-primary {
+    box-shadow: var(--pymixef-shadow-md);
+  }
+}
+
+@media (max-width: 960px) {
+  .pymixef-hero {
+    border-radius: 0.8rem;
+  }
+
+  .pymixef-hero::before,
+  .pymixef-hero::after {
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 0.965rem;
+  }
+
+  .bd-header {
+    min-height: 3.6rem;
+  }
+
+  .navbar-brand img {
+    height: 1.8rem;
+  }
+
+  .bd-article h1 {
+    font-size: 2.2rem;
+  }
+
+  .bd-article h2 {
+    margin-top: 2.6rem;
+  }
+
+  .pymixef-hero {
+    margin-inline: -0.55rem;
+    padding: 1.85rem 1.25rem 2.15rem;
+  }
+
+  .pymixef-hero h1 {
+    font-size: clamp(2.35rem, 14vw, 3.4rem);
+  }
+
+  .pymixef-hero::before,
+  .pymixef-hero::after {
+    display: none;
+  }
+
+  .search-hit-toolbar {
+    top: 3.8rem;
+    flex-wrap: wrap;
+  }
+
+  .search-hit-toolbar .search-hit-label {
+    flex: 1 0 100%;
+  }
+
+  div.math,
+  .math-wrapper,
+  mjx-container[display="true"] {
+    margin-inline: -0.2rem !important;
+    padding: 0.85rem 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .bd-header,
+  .bd-sidebar-primary,
+  .bd-sidebar-secondary,
+  .pymixef-reading-progress,
+  .search-hit-toolbar {
+    display: none !important;
+  }
+
+  body,
+  .pymixef-hero {
+    color: #1f1f1d;
+    background: #ffffff;
+  }
+
+  .pymixef-hero {
+    border: 1px solid #bbb8b0;
+    box-shadow: none;
+  }
+}

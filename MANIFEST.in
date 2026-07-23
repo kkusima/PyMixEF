@@ -1,0 +1,20 @@
+include LICENSE
+include NOTICE
+include README.md
+include .readthedocs.yaml
+include ARCHITECTURE.md
+include CITATION.cff
+include CHANGELOG.md
+include CONTRIBUTING.md
+include GOVERNANCE.md
+include SECURITY.md
+recursive-include docs *.css *.js *.json *.md *.png *.py *.svg
+prune docs/_build
+prune docs/api/generated
+recursive-include validation *.md
+recursive-include benchmarks *.json *.py
+recursive-include examples *.py *.ipynb *.md
+prune examples/notebooks/.ipynb_checkpoints
+recursive-include r *
+recursive-include native *
+recursive-include scripts *.py

@@ -1,0 +1,519 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pymixef.org/schemas/model-ir-v1.json",
+  "title": "PyMixEF model intermediate representation v1",
+  "description": "Backend-neutral, immutable scientific model semantics.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "family",
+    "fixed_effects",
+    "random_effects",
+    "predictors",
+    "likelihoods",
+    "covariance_structures",
+    "state_equations",
+    "events",
+    "parameters",
+    "transforms",
+    "priors",
+    "outputs",
+    "data_schema",
+    "estimator",
+    "metadata"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "name": {
+      "type": ["string", "null"]
+    },
+    "source": {
+      "type": ["string", "null"]
+    },
+    "formula": {
+      "type": ["string", "null"]
+    },
+    "response": {
+      "type": ["string", "null"]
+    },
+    "family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fixed_effects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fixedEffect"
+      }
+    },
+    "random_effects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/randomEffect"
+      }
+    },
+    "predictors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/predictor"
+      }
+    },
+    "likelihoods": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/likelihood"
+      }
+    },
+    "covariance_structures": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/covariance"
+      }
+    },
+    "state_equations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/stateEquation"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/parameter"
+      }
+    },
+    "transforms": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/transform"
+      }
+    },
+    "priors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/prior"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/output"
+      }
+    },
+    "data_schema": {
+      "type": "object"
+    },
+    "estimator": {
+      "type": "object"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "nodeMetadata": {
+      "type": "object",
+      "required": [
+        "dimensions",
+        "support",
+        "transform",
+        "unit",
+        "differentiability",
+        "dependencies",
+        "source_location",
+        "annotations"
+      ],
+      "properties": {
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": ["integer", "string"]
+          }
+        },
+        "support": {
+          "type": "string"
+        },
+        "transform": {
+          "type": "string"
+        },
+        "unit": {
+          "type": ["string", "null"]
+        },
+        "differentiability": {
+          "enum": [
+            "differentiable",
+            "piecewise-differentiable",
+            "non-differentiable",
+            "unknown"
+          ]
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_location": {
+          "type": ["string", "null"]
+        },
+        "annotations": {
+          "type": "object"
+        }
+      }
+    },
+    "fixedEffect": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "name", "expression", "columns"],
+          "properties": {
+            "node_type": {
+              "const": "fixed_effect"
+            },
+            "name": {
+              "type": "string"
+            },
+            "expression": {
+              "type": "string"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "randomEffect": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "terms", "group", "correlated", "covariance"],
+          "properties": {
+            "node_type": {
+              "const": "random_effect"
+            },
+            "terms": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            },
+            "group": {
+              "type": "string",
+              "minLength": 1
+            },
+            "correlated": {
+              "type": "boolean"
+            },
+            "covariance": {
+              "type": "string"
+            },
+            "known_matrix": {
+              "type": ["array", "null"],
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "predictor": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "name", "expression", "kind"],
+          "properties": {
+            "node_type": {
+              "const": "predictor"
+            },
+            "name": {
+              "type": "string"
+            },
+            "expression": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "likelihood": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "response", "family", "link", "component", "formulas"],
+          "properties": {
+            "node_type": {
+              "const": "likelihood"
+            },
+            "response": {
+              "type": "string"
+            },
+            "family": {
+              "type": "string"
+            },
+            "link": {
+              "type": "string"
+            },
+            "component": {
+              "type": "string"
+            },
+            "formulas": {
+              "type": "object"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "covariance": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "structure", "target", "dimension", "index", "group", "options"],
+          "properties": {
+            "node_type": {
+              "const": "covariance"
+            },
+            "structure": {
+              "type": "string"
+            },
+            "target": {
+              "type": "string"
+            },
+            "dimension": {
+              "type": ["integer", "null"],
+              "minimum": 1
+            },
+            "index": {
+              "type": ["string", "null"]
+            },
+            "group": {
+              "type": ["string", "null"]
+            },
+            "options": {
+              "type": "object"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "stateEquation": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "state", "rhs", "equation_kind", "initial"],
+          "properties": {
+            "node_type": {
+              "const": "state_equation"
+            },
+            "state": {
+              "type": "string"
+            },
+            "rhs": {
+              "type": "string"
+            },
+            "equation_kind": {
+              "type": "string"
+            },
+            "initial": {
+              "type": ["string", "number"]
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "event": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "event_type", "target", "fields"],
+          "properties": {
+            "node_type": {
+              "const": "event"
+            },
+            "event_type": {
+              "type": "string"
+            },
+            "target": {
+              "type": ["string", "null"]
+            },
+            "fields": {
+              "type": "object"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "parameter": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "name", "initial", "bounds", "fixed", "role"],
+          "properties": {
+            "node_type": {
+              "const": "parameter"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "initial": {
+              "type": ["number", "array", "null"],
+              "items": {
+                "type": "number"
+              }
+            },
+            "bounds": {
+              "type": ["array", "null"],
+              "prefixItems": [
+                {
+                  "type": ["number", "null"]
+                },
+                {
+                  "type": ["number", "null"]
+                }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "fixed": {
+              "type": "boolean"
+            },
+            "role": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "transform": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "name", "kind", "options"],
+          "properties": {
+            "node_type": {
+              "const": "transform"
+            },
+            "name": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "options": {
+              "type": "object"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "prior": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "target", "distribution", "parameters"],
+          "properties": {
+            "node_type": {
+              "const": "prior"
+            },
+            "target": {
+              "type": "string"
+            },
+            "distribution": {
+              "type": "string"
+            },
+            "parameters": {
+              "type": "object"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "output": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/nodeMetadata"
+        },
+        {
+          "type": "object",
+          "required": ["node_type", "name", "expression", "output_kind"],
+          "properties": {
+            "node_type": {
+              "const": "output"
+            },
+            "name": {
+              "type": "string"
+            },
+            "expression": {
+              "type": "string"
+            },
+            "output_kind": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

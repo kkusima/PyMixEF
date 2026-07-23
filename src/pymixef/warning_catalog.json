@@ -1,0 +1,140 @@
+{
+  "catalog_version": "1.0.0",
+  "warnings": [
+    {
+      "code": "DATA-ROWS-EXCLUDED-001",
+      "severity": "review",
+      "component": "data",
+      "message": "One or more source rows were excluded from the analysis.",
+      "meaning": "The missingness or validity contract removed records before matrix compilation.",
+      "likely_causes": ["Missing response", "Missing covariate", "Invalid record", "Structurally absent endpoint"],
+      "remediation": "Inspect the row-complete DataAudit and confirm that every exclusion matches the analysis plan."
+    },
+    {
+      "code": "DATA-FACTOR-LEVEL-DROPPED-001",
+      "severity": "review",
+      "component": "data",
+      "message": "A declared factor level has no retained observations.",
+      "meaning": "Filtering left an empty factor level; its original declaration remains in provenance.",
+      "likely_causes": ["Analysis filtering", "Missingness exclusions"],
+      "remediation": "Review exclusions and pre-specified contrasts; do not silently choose a new reference level."
+    },
+    {
+      "code": "DATA-DUPLICATE-KEY-001",
+      "severity": "review",
+      "component": "data",
+      "message": "Repeated-measures keys are duplicated.",
+      "meaning": "More than one row shares the declared observation key.",
+      "likely_causes": ["Duplicate import", "Multiple endpoints without an endpoint key"],
+      "remediation": "Add all defining key columns or resolve duplicate source records."
+    },
+    {
+      "code": "DATA-TIME-ORDER-001",
+      "severity": "error",
+      "component": "data",
+      "message": "Time decreases within a source group.",
+      "meaning": "Longitudinal or event semantics may depend on a deterministic order.",
+      "likely_causes": ["Unsorted records", "Mixed time scales"],
+      "remediation": "Canonicalize time and explicitly stable-sort within group."
+    },
+    {
+      "code": "FORMULA-RANK-DEFICIENT-001",
+      "severity": "review",
+      "component": "formula",
+      "message": "The fixed-effect design matrix is rank deficient.",
+      "meaning": "At least one fixed coefficient is not independently estimable.",
+      "likely_causes": ["Empty cells", "Redundant interactions", "Perfectly collinear predictors"],
+      "remediation": "Inspect the dry-run aliased column list and revise the estimand or coding."
+    },
+    {
+      "code": "FORMULA-CONSTANT-SCALE-001",
+      "severity": "error",
+      "component": "formula",
+      "message": "A constant predictor cannot be standardized.",
+      "meaning": "The requested scaling denominator is zero.",
+      "likely_causes": ["Filtering to one predictor value", "Incorrect input column"],
+      "remediation": "Remove scaling or supply a predictor with nonzero variation."
+    },
+    {
+      "code": "COV-BOUNDARY-001",
+      "severity": "review",
+      "component": "covariance",
+      "message": "A variance component is on the numerical boundary.",
+      "meaning": "A zero or near-zero variance may be a valid boundary optimum or weak identification.",
+      "likely_causes": ["No supported between-group variation", "Overly rich random structure"],
+      "remediation": "Inspect eigenvalues, design confounding, profile likelihood, and a simpler pre-specified structure."
+    },
+    {
+      "code": "COV-SINGULAR-001",
+      "severity": "review",
+      "component": "covariance",
+      "message": "An estimated covariance block is rank deficient or nearly singular.",
+      "meaning": "The effective random-effect dimension is below its nominal dimension.",
+      "likely_causes": ["Near-zero variance", "Near-perfect correlation", "Sparse group-level information"],
+      "remediation": "Review the singularity report, group counts, and random-effect design."
+    },
+    {
+      "code": "COV-CORRELATION-BOUNDARY-001",
+      "severity": "review",
+      "component": "covariance",
+      "message": "An estimated correlation is near plus or minus one.",
+      "meaning": "The covariance block is close to a lower-dimensional boundary.",
+      "likely_causes": ["Confounded random slopes", "Too few observations per group"],
+      "remediation": "Inspect parameter profiles and consider a scientifically justified diagonal structure."
+    },
+    {
+      "code": "NUM-HESSIAN-INDEFINITE-001",
+      "severity": "review",
+      "component": "inference",
+      "message": "The observed Hessian is not positive definite.",
+      "meaning": "Local curvature does not support ordinary Wald uncertainty.",
+      "likely_causes": ["Non-convergence", "Boundary optimum", "Non-identification"],
+      "remediation": "Do not report naive Wald inference; inspect gradients, profiles, and alternative starts."
+    },
+    {
+      "code": "NUM-GRADIENT-LARGE-001",
+      "severity": "review",
+      "component": "optimization",
+      "message": "The scaled gradient remains larger than its convergence tolerance.",
+      "meaning": "Optimizer termination is not sufficient evidence of a stationary point.",
+      "likely_causes": ["Poor scaling", "Iteration limit", "Numerical derivative error"],
+      "remediation": "Rescale parameters, tighten controls, and compare independent starts or engines."
+    },
+    {
+      "code": "INFERENCE-BOUNDARY-LRT-001",
+      "severity": "review",
+      "component": "inference",
+      "message": "A naive chi-square likelihood-ratio reference is invalid at a variance boundary.",
+      "meaning": "Variance-component null hypotheses have nonstandard asymptotic distributions.",
+      "likely_causes": ["Testing a zero random-effect variance"],
+      "remediation": "Use a documented mixture reference or parametric bootstrap."
+    },
+    {
+      "code": "ENGINE-APPROXIMATION-001",
+      "severity": "information",
+      "component": "engine",
+      "message": "The selected estimator uses an explicit likelihood approximation.",
+      "meaning": "The reported objective is conditional on the named approximation and controls.",
+      "likely_causes": ["Laplace", "Quadrature", "Linearization"],
+      "remediation": "Report the method and assess sensitivity to approximation controls."
+    },
+    {
+      "code": "INTEROP-APPROXIMATED-001",
+      "severity": "review",
+      "component": "interoperability",
+      "message": "A translated construct is only approximately equivalent.",
+      "meaning": "Source and target semantics or likelihood conventions differ.",
+      "likely_causes": ["Unsupported covariance", "Different distribution parameterization"],
+      "remediation": "Inspect the compatibility report and validate the translated objective component-wise."
+    },
+    {
+      "code": "SIM-MONTE-CARLO-ERROR-001",
+      "severity": "information",
+      "component": "simulation",
+      "message": "Simulation summaries carry non-negligible Monte Carlo error.",
+      "meaning": "Stochastic uncertainty must be distinguished from model uncertainty.",
+      "likely_causes": ["Too few replicates", "Rare event probability"],
+      "remediation": "Increase deterministic-seed replicates and report Monte Carlo standard errors."
+    }
+  ]
+}

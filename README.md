@@ -1,6 +1,6 @@
-# PyMixEF
+# <img src="https://raw.githubusercontent.com/kkusima/PyMixEF/main/docs/_static/brand/pymixef-mark.svg" alt="" width="32" /> PyMixEF
 
-PyMixEF is a Python-native platform for mixed-effects statistics and
+PyMixEF is a Python-native package for mixed-effects statistics and
 pharmacometrics. Its architecture follows one central rule: define the scientific
 model once in a typed, versioned intermediate representation, then let compatible
 estimation engines consume that representation.

@@ -1,0 +1,12 @@
+{# Override of the pydata theme's copyright component: link the author name
+   in the footer to the author's website. Name/URL come from html_context. #}
+{% if show_copyright and copyright %}
+  <p class="copyright">
+    {% set linked = (copyright | e) | replace(
+        author_name | e,
+        '<a href="' ~ author_url ~ '" rel="author">' ~ (author_name | e) ~ '</a>'
+      ) %}
+    © Copyright {{ linked | safe }}.
+    <br/>
+  </p>
+{% endif %}

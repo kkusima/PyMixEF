@@ -20,6 +20,12 @@ copyright = "2026, Kenneth L. Kusima, Ph.D"
 version = __version__
 release = __version__
 
+# Used by _templates/copyright.html to link the author name in the footer.
+html_context = {
+    "author_name": "Kenneth L. Kusima, Ph.D",
+    "author_url": "https://sites.google.com/view/kennethkusima",
+}
+
 extensions = [
     "myst_parser",
     "sphinx.ext.apidoc",
@@ -102,6 +108,7 @@ html_title = f"PyMixEF {release} documentation"
 html_logo = "_static/brand/pymixef-logo.svg"
 html_favicon = "_static/brand/pymixef-mark.svg"
 html_static_path = ["_static"]
+templates_path = ["_templates"]
 html_css_files = ["css/pymixef.css"]
 html_js_files = [
     "js/search-highlight.js",

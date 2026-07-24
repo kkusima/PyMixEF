@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
-authors = [{name = "PyMixEF contributors"}]
+authors = [{name = "Kenneth L. Kusima, Ph.D."}]
 keywords = [
   "mixed-effects",
   "longitudinal",

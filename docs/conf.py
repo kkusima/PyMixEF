@@ -16,7 +16,7 @@ from pymixef import __version__  # noqa: E402
 
 project = "PyMixEF"
 author = "PyMixEF contributors"
-copyright = "2026, PyMixEF contributors"
+copyright = "2026, Kenneth L. Kusima, Ph.D."
 version = __version__
 release = __version__
 
